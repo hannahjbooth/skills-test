@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Test Practice</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1>Skills Test Practice</h1>
+    </header>
+    <main>
+        <p>This page contains my test practices.</p>
+        <h2>Task 1:</h2>
+        <p>“Create a patient intake form with name, date of birth, symptoms, and a submit button.”</p>
+        <p>Add:</p>
+        <ul>
+            <li>Basic validation</li>
+            <li>CSS (make it readable and accessible)</li>
+            <li>Some basic JavaScript</li>
+        </ul>
+        <form method="post" novalidate>
+            <p class="required-message" aria-hidden="true">* Required information</p>
+            <br>
+            <div>
+                <label for="name">Name <span aria-hidden="true">*</span></label>
+                <input type="text" id="name" name="Name" required>
+                <div class="reserved">
+                    <p id="name-error" class="error-message"></p>       
+                </div>
+            </div>
+            <div>
+                <label for="surname">Surname <span aria-hidden="true">*</span></label>
+                <input type="text" id="surname" name="Surname" required>
+                <div class="reserved">
+                    <p id="surname-error" class="error-message"></p>       
+                </div>                       
+            </div>
+            <div>
+                <label for="dob">Date of Birth <span aria-hidden="true">*</span></label>
+                <input type="date" id="dob" required>
+                <div class="reserved">
+                    <p id="dob-error" class="error-message"></p>       
+                </div>
+            </div>
+            <div>
+                <div class="flex-column">
+                    <label for="symptoms">Symptoms <span aria-hidden="true">*</span></label>
+                    <textarea name="Symptoms" id="symptoms" rows="4" required></textarea>             
+                </div>
+                <div class="reserved">
+                    <p id="symptoms-error" class="error-message"></p>       
+                </div>   
+            </div>
+            <input type="submit" id="submit" name="Submit">
+            <div class="submission-message">
+                <p id="submission-message"></p>
+            </div>
+        </form>
+
+
+    </main>
+    <footer>
+        <p><i>by Hannah Booth</i></p>
+    </footer>
+    <script src="/script.js"></script>
+</body>
+</html>
