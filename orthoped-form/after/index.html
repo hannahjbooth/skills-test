@@ -100,14 +100,14 @@
             >
             <fieldset class="outer-form-fieldset">
                 <legend>OrthoPed Foot Drop Splint Feedback Form</legend>
-                <p>* Indicates required question</p>
+                <p aria-hidden="true">* Indicates required question</p>
                 <div class="steps">
                     <div data-step="1" class="step">
                         <fieldset class="inner-form-fieldset">
                             <legend>User Information</legend>
                             <div data-question="1" class="question">
                                 <p class="required-message hidden">Required</p>
-                                <label for="q1">Please select which of the following categories apply to you *</label>
+                                <label for="q1">Please select which of the following categories apply to you <span aria-hidden="true">*</span></label>
                                 <select id="q1" name="q2_which_categories_apply" required>
                                     <option value="" disabled selected></option>
                                     <option value="I am the user of the product">I am the user of the product</option>
@@ -116,7 +116,7 @@
                             </div>
                             <div data-question="2" class="question">
                                 <p class="required-message hidden">Required</p>
-                                <label for="q2">Please select which size splint was supplied *</label>
+                                <label for="q2">Please select which size splint was supplied <span aria-hidden="true">*</span></label>
                                 <select name="q2_which_size_was_supplied" id="q2" required>
                                     <option value="" disabled selected></option>
                                     <option value="Child - Extra Small">Child - Extra Small</option>
@@ -127,7 +127,7 @@
                             </div>
                             <div data-question="3" class="question">
                                 <p class="required-message hidden">Required</p>
-                                <label for="q3">Please select the UK shoe size for the user of the splint *</label>
+                                <label for="q3">Please select the UK shoe size for the user of the splint <span aria-hidden="true">*</span></label>
                                 <select name="q3_select_user_shoe_size" id="q3" required>
                                     <option value="" disabled selected></option>
                                     <option value="Child - 2 to 4.5">Child - 2 to 4.5</option>
@@ -151,7 +151,7 @@
                             </div>
                             <div data-question="4" class="question">
                                 <p class="required-message hidden">Required</p>
-                                <label for="q4">Please select the age range for the user of the splint *</label>
+                                <label for="q4">Please select the age range for the user of the splint <span aria-hidden="true">*</span></label>
                                 <select name="q4_select_user_age_range" id="q4" required>
                                     <option value="" disabled selected></option>
                                     <option value="2 - 5 years">2 - 5 years</option>
@@ -164,7 +164,7 @@
                             </div>
                             <div data-question="5" class="question radio-question">
                                 <p class="required-message hidden">Required</p>                                            
-                                <p>Is the user able to put on their own shoes? *</p>
+                                <p>Is the user able to put on their own shoes? <span aria-hidden="true">*</span></p>
                                 <div class="radio-options">
                                     <label for="q5-a1">Yes - velcro only</label>
                                     <input id="q5-a1" type="radio" name="q5_can_user_put_on_their_own_shoes" value="Yes - velcro only" required>
@@ -190,7 +190,7 @@
                             <legend>Product fit, comfort and appearance</legend>
                             <div data-question="7" class="question radio-question">
                                 <p class="required-message hidden">Required</p>
-                                <p>How was the fit of the splint: *</p>                        
+                                <p>How was the fit of the splint: <span aria-hidden="true">*</span></p>                        
                                 <div class="radio-options">
                                     <label for="q7-a1">Much too big</label>
                                     <input id="q7-a1" type="radio"  name="q7_product_fit_comfort_and_appearance" value="Much too big" required>
@@ -206,7 +206,7 @@
                             </div>
                             <div data-question="8" class="question">
                                 <p class="required-message hidden">Required</p>
-                                <p>Was there any discomfort while wearing the splint? (Please select all that apply) *</p>
+                                <p>Was there any discomfort while wearing the splint? (Please select all that apply) <span aria-hidden="true">*</span></p>
                                 <div class="checkbox-options">
                                     <label for="q8-a1">No</label>
                                     <input id="q8-a1" type="checkbox" name="q8_was_there_discomfort_while_wearing_the_splint" value="No" required>
@@ -227,7 +227,7 @@
                             </div>
                             <div data-question="9" class="question radio-question">
                                 <p class="required-message hidden">Required</p>
-                                <p>Based on the appearance of the splint, how likely would you / the user be to wear it frequently? *</p>
+                                <p>Based on the appearance of the splint, how likely would you / the user be to wear it frequently? <span aria-hidden="true">*</span></p>
                                 <div class="radio-options">
                                     <label for="q9-a1">Very likely</label>
                                     <input id="q9-a1" type="radio" name="q9_based_on_splint_apperance_how_likely_would_frequent_wear_be" value="Very likely" required>
@@ -243,7 +243,7 @@
                             </div>
                             <div data-question="10" class="question">
                                 <p class="required-message hidden">Required</p>
-                                <label for="q10">Please briefly explain your answer to the previous question *</label>
+                                <label for="q10">Please briefly explain your answer to the previous question <span aria-hidden="true">*</span></label>
                                 <textarea id="q10" name="q10_explanation_to_previous_answer" required></textarea>
                             </div>
                         </fieldset>
@@ -253,7 +253,7 @@
                             <legend>Ease of use of product</legend>
                             <div data-question="11" class="question radio-question">
                                 <p class="required-message hidden">Required</p>
-                                <p>How easy was it to put the splint on and take it off? *</p>
+                                <p>How easy was it to put the splint on and take it off? <span aria-hidden="true">*</span></p>
                                 <div class="radio-options">
                                     <label for="q11-a1">Very easy</label>
                                     <input id="q11-a1" type="radio" name="q11_how_easy_was_taking_on_and_off" value="Very easy" required>
@@ -269,7 +269,7 @@
                             </div>
                             <div data-question="12" class="question radio-question">
                                 <p class="required-message hidden">Required</p>
-                                <p>If applicable, were you able to put the splint on one-handed? *</p>
+                                <p>If applicable, were you able to put the splint on one-handed? <span aria-hidden="true">*</span></p>
                                 <div class="radio-options">
                                     <label for="q12-a1">Yes, easily</label>
                                     <input id="q12-a1" type="radio" name="q12_if_applicable_could_user_put_it_on_onehanded" value="Yes, easily" required>
@@ -288,7 +288,7 @@
                             <legend>Product effectiveness</legend>
                             <div data-question="13" class="question radio-question">
                                 <p class="required-message hidden">Required</p>
-                                <p>Do you feel the splint helped you / the user to walk more easily? *</p>
+                                <p>Do you feel the splint helped you / the user to walk more easily? <span aria-hidden="true">*</span></p>
                                 <div class="radio-options">
                                     <label for="q13-a1">Yes, compared to barefoot</label>
                                     <input id="q13-a1" type="radio" name="q13_did_it_help_walk_more_easily" value="Yes, compared to barefoot" required>
