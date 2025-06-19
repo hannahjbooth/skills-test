@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>OrthoPed | Feedback</title>
-        <link rel="stylesheet" href="/orthoped-form/before/style.css">
+        <link rel="stylesheet" href="/orthoped-form/after/style.css">
         
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -174,19 +174,25 @@
                                 <div class="question radio-question"> <!-- Q5 -->
                                     <p class="required-message hidden">Required</p>                                            
                                         <p>Is the user able to put on their own shoes? *</p>
-                                        <input type="radio" id="yes-velcro-only" name="Q5 - Is the user able to put on their own shoes?" value="Yes - velcro only" required>
-                                        <label for="yes-velcro-only">Yes - velcro only</label>
-                                        <input type="radio" id="yes-laced-or-velcro" name="Q5 - Is the user able to put on their own shoes?" value="Yes - laced or velcro">
-                                        <label for="yes-laced-or-velcro">Yes - laced or velcro</label>
-                                        <input type="radio" id="shoes-no" name="Q5 - Is the user able to put on their own shoes?" value="No">
-                                        <label for="shoes-no">No</label>
+                                        <div class="radio-options">
+                                            <input type="radio" id="yes-velcro-only" name="Q5 - Is the user able to put on their own shoes?" value="Yes - velcro only" required>
+                                            <label for="yes-velcro-only">Yes - velcro only</label>
+                                            <input type="radio" id="yes-laced-or-velcro" name="Q5 - Is the user able to put on their own shoes?" value="Yes - laced or velcro">
+                                            <label for="yes-laced-or-velcro">Yes - laced or velcro</label>
+                                            <input type="radio" id="shoes-no" name="Q5 - Is the user able to put on their own shoes?" value="No">
+                                            <label for="shoes-no">No</label>                                            
+                                        </div>
+
+
                                 </div>
                                 <div class="question radio-question"> <!-- Q6 -->
                                     <p>If you answered yes to the previous question, was the user able to put the splint on without assistance?</p>                                            
+                                    <div class="radio-options">   
                                         <input type="radio" id="assistance-yes" name="Q6 - If you answered yes to the previous question, was the user able to put the splint on without assistance?" value="Yes">
                                         <label for="assistance-yes">Yes</label>                                           
                                         <input type="radio" id="assistance-no" name="Q6 - If you answered yes to the previous question, was the user able to put the splint on without assistance?" value="No">
-                                        <label for="assistance-no">No</label>    
+                                        <label for="assistance-no">No</label> 
+                                    </div>   
                                 </div>
                             </fieldset>
                         </div>
@@ -198,67 +204,71 @@
                                 <div class="question radio-question"> <!-- Q7 -->
                                     <p class="required-message hidden">Required</p>
                                         <p>How was the fit of the splint: *</p>
+                                        
+                                        <div class="radio-options">
+                                            <input type="radio" id="much-too-big" name="Q7 - Product fit, comfort and appearance" value="Much too big" required>
+                                            <label for="much-too-big">Much too big</label>
 
-                                        <input type="radio" id="much-too-big" name="Q7 - Product fit, comfort and appearance" value="Much too big" required>
-                                        <label for="much-too-big">Much too big</label>
+                                            <input type="radio" id="little-too-big" name="Q7 - Product fit, comfort and appearance" value="A little bit too big">
+                                            <label for="little-too-big">A little bit too big</label>
 
-                                        <input type="radio" id="little-too-big" name="Q7 - Product fit, comfort and appearance" value="A little bit too big">
-                                        <label for="little-too-big">A little bit too big</label>
+                                            <input type="radio" id="just-right" name="Q7 - Product fit, comfort and appearance" value="Just Right">
+                                            <label for="just-right">Just Right</label>
 
-                                        <input type="radio" id="just-right" name="Q7 - Product fit, comfort and appearance" value="Just Right">
-                                        <label for="just-right">Just Right</label>
+                                            <input type="radio" id="little-too-small" name="Q7 - Product fit, comfort and appearance" value="A little bit too small">
+                                            <label for="little-too-small">A little bit too small</label>
 
-                                        <input type="radio" id="little-too-small" name="Q7 - Product fit, comfort and appearance" value="A little bit too small">
-                                        <label for="little-too-small">A little bit too small</label>
-
-                                        <input type="radio" id="much-too-small" name="Q7 - Product fit, comfort and appearance" value="Much too small">
-                                        <label for="much-too-small">Much too small</label>
+                                            <input type="radio" id="much-too-small" name="Q7 - Product fit, comfort and appearance" value="Much too small">
+                                            <label for="much-too-small">Much too small</label>
+                                        </div>
                                 </div>
 
                                 <div class="question"> <!-- Q8 -->
                                     <p class="required-message hidden">Required</p>
                                         <p>Was there any discomfort while wearing the splint? (Please select all that apply) *</p>
+                                        <div class="checkbox-options">
+                                            <input type="checkbox" id="discomfort-no" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="No" required>
+                                            <label for="discomfort-no">No</label>
 
-                                        <input type="checkbox" id="discomfort-no" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="No" required>
-                                        <label for="discomfort-no">No</label>
+                                            <input type="checkbox" id="discomfort-yes-pinching" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="yes - pinching" required>
+                                            <label for="discomfort-yes-pinching">Yes - pinching</label>
 
-                                        <input type="checkbox" id="discomfort-yes-pinching" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="yes - pinching" required>
-                                        <label for="discomfort-yes-pinching">Yes - pinching</label>
+                                            <input type="checkbox" id="discomfort-yes-pulling" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="Yes - pulling" required>
+                                            <label for="discomfort-yes-pulling">Yes - pulling</label>
 
-                                        <input type="checkbox" id="discomfort-yes-pulling" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="Yes - pulling" required>
-                                        <label for="discomfort-yes-pulling">Yes - pulling</label>
+                                            <input type="checkbox" id="discomfort-yes-rubbing" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="Yes - rubbing" required>
+                                            <label for="discomfort-yes-rubbing">Yes - rubbing</label>
 
-                                        <input type="checkbox" id="discomfort-yes-rubbing" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="Yes - rubbing" required>
-                                        <label for="discomfort-yes-rubbing">Yes - rubbing</label>
+                                            <input type="checkbox" id="discomfort-yes-redness" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="Yes - redness" required>
+                                            <label for="discomfort-yes-redness">Yes - redness</label>
 
-                                        <input type="checkbox" id="discomfort-yes-redness" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="Yes - redness" required>
-                                        <label for="discomfort-yes-redness">Yes - redness</label>
+                                            <input type="checkbox" id="discomfort-yes-swelling" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="Yes - swelling" required>
+                                            <label for="discomfort-yes-swelling">Yes - swelling</label>
 
-                                        <input type="checkbox" id="discomfort-yes-swelling" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="Yes - swelling" required>
-                                        <label for="discomfort-yes-swelling">Yes - swelling</label>
-
-                                        <input type="checkbox" id="discomfort-other" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="Other discomfort" required>
-                                        <label for="discomfort-other">Other:</label>
-                                        <input type="text" id="discomfort-other-text" name="Q8 - Details"
-                                            aria-labelledby="discomfort-other">
+                                            <input type="checkbox" id="discomfort-other" name="Q8 - Was there any discomfort while wearing the splint? (Please select all that apply)" value="Other discomfort" required>
+                                            <label for="discomfort-other">Other:</label>
+                                            <input type="text" id="discomfort-other-text" name="Q8 - Details"
+                                                aria-labelledby="discomfort-other">
+                                        </div>
                                 </div>
                                 <div class="question radio-question"> <!-- Q9 -->
                                     <p class="required-message hidden">Required</p>
                                         <p>Based on the appearance of the splint, how likely would you / the user be to wear it frequently? *</p>
+                                        <div class="radio-options">
+                                            <input type="radio" id="very-likely" name="Q9 - Based on the appearance of the splint, how likely would you / the user be to wear it frequently?" value="Very likely" required>
+                                            <label for="very-likely">Very likely</label>
 
-                                        <input type="radio" id="very-likely" name="Q9 - Based on the appearance of the splint, how likely would you / the user be to wear it frequently?" value="Very likely" required>
-                                        <label for="very-likely">Very likely</label>
+                                            <input type="radio" id="quite-likely" name="Q9 - Based on the appearance of the splint, how likely would you / the user be to wear it frequently?" value="Quite likely">
+                                            <label for="quite-likely">Quite likely</label>
+                                            <input type="radio" id="not-sure" name="Q9 - Based on the appearance of the splint, how likely would you / the user be to wear it frequently?" value="Not sure">
+                                            <label for="not-sure">Not sure</label>
 
-                                        <input type="radio" id="quite-likely" name="Q9 - Based on the appearance of the splint, how likely would you / the user be to wear it frequently?" value="Quite likely">
-                                        <label for="quite-likely">Quite likely</label>
-                                        <input type="radio" id="not-sure" name="Q9 - Based on the appearance of the splint, how likely would you / the user be to wear it frequently?" value="Not sure">
-                                        <label for="not-sure">Not sure</label>
+                                            <input type="radio" id="quite-unlikely" name="Q9 - Based on the appearance of the splint, how likely would you / the user be to wear it frequently?" value="Quite unlikely">
+                                            <label for="quite-unlikely">Quite unlikely</label>
 
-                                        <input type="radio" id="quite-unlikely" name="Q9 - Based on the appearance of the splint, how likely would you / the user be to wear it frequently?" value="Quite unlikely">
-                                        <label for="quite-unlikely">Quite unlikely</label>
-
-                                        <input type="radio" id="very-unlikely" name="Q9 - Based on the appearance of the splint, how likely would you / the user be to wear it frequently?" value="Very unlikely">
-                                        <label for="very-unlikely">Very unlikely</label>
+                                            <input type="radio" id="very-unlikely" name="Q9 - Based on the appearance of the splint, how likely would you / the user be to wear it frequently?" value="Very unlikely">
+                                            <label for="very-unlikely">Very unlikely</label>
+                                        </div>
                                 </div>
                                 <div class="question"> <!-- Q10 -->
                                     <p class="required-message hidden">Required</p>
@@ -275,7 +285,7 @@
                                 <div class="question radio-question"> <!-- Q11 -->
                                     <p class="required-message hidden">Required</p>
                                         <p>How easy was it to put the splint on and take it off? *</p>
-
+                                    <div class="radio-options">
                                         <input type="radio" id="very-easy" name="Q11 - How easy was it to put the splint on and take it off?" value="Very easy" required>
                                         <label for="very-easy">Very easy</label>
 
@@ -291,11 +301,12 @@
 
                                         <input type="radio" id="very-difficult" name="Q11 - How easy was it to put the splint on and take it off?" value="Very difficult">
                                         <label for="very-difficult">Very difficult</label>
+                                    </div>
                                 </div>
                                 <div class="question radio-question"> <!-- Q12 -->
                                     <p class="required-message hidden">Required</p>
                                         <p>If applicable, were you able to put the splint on one-handed? *</p>
-
+                                    <div class="radio-options">
                                         <input type="radio" id="yes-easily" name="Q12 - If applicable, were you able to put the splint on one-handed?" value="Yes, easily" required>
                                         <label for="yes-easily">Yes, easily</label>
 
@@ -307,6 +318,7 @@
 
                                         <input type="radio" id="no-need" name="Q12 - If applicable, were you able to put the splint on one-handed?" value="Not applicable, I did not need to put it on one-handed">
                                         <label for="no-need">Not applicable, I did not need to put it on one-handed</label>
+                                    </div>
                                 </div>
                             </fieldset>
                         </div>
@@ -318,7 +330,7 @@
                                 <div class="question radio-question"> <!-- Q13 -->
                                     <p class="required-message hidden">Required</p>
                                         <p>Do you feel the splint helped you / the user to walk more easily? *</p>
-
+                                    <div class="radio-options">
                                         <input type="radio" id="yes-barefoot" name="Q13 - Do you feel the splint helped you / the user to walk more easily?" value="Yes, compared to barefoot" required>
                                         <label for="yes-barefoot">Yes, compared to barefoot</label>
 
@@ -330,6 +342,7 @@
 
                                         <input type="radio" id="no-improvement" name="Q13 - Do you feel the splint helped you / the user to walk more easily?" value="No, there was no improvement">
                                         <label for="no-improvement">No, there was no improvement</label>
+                                    </div>
                                 </div>
                             </fieldset>
                         </div>
@@ -405,7 +418,7 @@
         </div>
 
     </footer>
-    <script src="/orthoped-form/before/script.js"></script>
+    <script src="/orthoped-form/after/script.js"></script>
 </body>
 
 </html>
