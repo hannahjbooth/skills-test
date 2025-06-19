@@ -865,6 +865,10 @@
 
     /* Feedback Form */
 
+    .feedback-main .page-h1-container {
+        padding-top: 15px;
+    }
+
     .feedback-intro {
         margin-left: 20%;
         margin-right: 20%;
