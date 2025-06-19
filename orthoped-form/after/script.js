@@ -292,10 +292,10 @@ for (let question of questions) {
 
         let currentStepIndex = getCurrentStepIndex(formSteps, currentStep);
         let nextStep = formSteps[currentStepIndex + 1];
+        let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions(); // I moved this from inside the below if statement
 
         if (nextStep) {
-            let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions(); 
-            returnsObjectOfRequiredElementsGroupedByType(requiredElements);
+            // This was unused inside this event listener returnsObjectOfRequiredElementsGroupedByType(requiredElements);
 
             hidesAllRequiredMessages();
 
@@ -370,6 +370,7 @@ for (let question of questions) {
                 requiredElementsGroupedByType.textarea.push(element);
             }
         });
+        console.log('testing requiredElementsGroupedByType', requiredElementsGroupedByType);
         return requiredElementsGroupedByType;
     }
 
@@ -419,6 +420,7 @@ for (let question of questions) {
 
     function returnsArrayOfUnansweredRequiredInputs(requiredElements) {
         let object = returnsObjectOfRequiredElementsGroupedByType(requiredElements);
+        console.log('testing object', object);
         
         let unansweredRequiredInputs = [];
 
