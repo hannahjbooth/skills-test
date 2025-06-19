@@ -932,6 +932,15 @@
         color: red;
     }
 
+    .radio-options, .checkbox-options {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+    }
+
+    #discomfort-other-text {
+        grid-column: 2;
+    }
+
     /* Footer */
 
     .patent, .copyright {
