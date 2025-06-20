@@ -879,9 +879,7 @@
         display: flex;
         justify-content: center;
     }
-
-
-
+    
     .question fieldset {
         border: none;
         padding: 0;
@@ -910,6 +908,7 @@
         background-color: #776b6b17;
         border-width: 1px;
         padding-left: 20px;
+        padding-bottom: 0;
         margin: 20px;
         border-radius: 10px;
         box-shadow: 2px 2px 8px 0px #7b7b7b4e;   
@@ -936,14 +935,44 @@
         color: red;
     }
 
-    .radio-options, .checkbox-options {
+    #feedback .pair, #feedback .other {
         display: grid;
         grid-template-columns: 1fr 3fr;
+    }
+
+    #feedback .pair input {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    #feedback .pair label {
+        grid-column: 2;
+        grid-row: 1;
+    }    
+
+    #feedback .other #q8-a7 {
+        grid-column: 1;
+        grid-row: 1;        
+    }
+
+    #feedback .other #q8-a7-text, #feedback .other label {
+        grid-column: 2;
     }
 
     #discomfort-other-text {
         grid-column: 2;
     }
+
+
+    
+
+    /* .radio-options label, .checkbox-options label {
+        grid-column: 2;
+    }
+    
+    .radio-options input, .checkbox-options input {
+        grid-column: 1;
+    } */    
 
     /* Footer */
 
