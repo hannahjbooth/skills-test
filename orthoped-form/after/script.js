@@ -245,6 +245,12 @@ for (let question of questions) {
     const firstStep = formSteps[0];
     const lastStep = formSteps[formSteps.length - 1];
 
+    function handleStepDisplay(currentStep, nextStep) {
+        currentStep.classList.add("hidden");
+        nextStep.classList.remove("hidden");
+        // return currentStep = nextStep;
+    }
+
     function displayButton(button) {
         button.classList.remove("hidden");
     }
@@ -288,11 +294,13 @@ for (let question of questions) {
     
     handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
 
+
+    let currentStepIndex = getCurrentStepIndex(formSteps, currentStep);
+    let nextStep = formSteps[currentStepIndex + 1];
+    
     next.addEventListener("click", function(event) {
 
-        let currentStepIndex = getCurrentStepIndex(formSteps, currentStep);
-        let nextStep = formSteps[currentStepIndex + 1];
-        let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions(); // I moved this from inside the below if statement
+        let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions();
 
         if (nextStep) {
 
@@ -301,8 +309,7 @@ for (let question of questions) {
             if (isRequiredInputIsMissing(requiredElements) === true) {
                 handleRequiredMessages(requiredElements);
             } else {
-                currentStep.classList.add("hidden");
-                nextStep.classList.remove("hidden");
+                handleStepDisplay(currentStep, nextStep);
                 currentStep = nextStep;
                 handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
             }
@@ -329,6 +336,8 @@ for (let question of questions) {
     })
 
 // Handle manual validation
+
+
 
     function handleRequiredMessages(requiredElements) {
         returnArrayOfUnansweredRequiredInputs(requiredElements);
