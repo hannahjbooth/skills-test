@@ -324,7 +324,7 @@ handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
 
             hideAllRequiredMessages();
 
-            if (isRequiredInputIsMissing(requiredElements) === true) {
+            if (isRequiredInputMissing(requiredElements) === true) {
                 handleRequiredMessages(requiredElements);
             } else {
                 displayNextStep(currentStep, nextStep);
@@ -389,7 +389,7 @@ function returnArrayOfInputsFromCurrentRequiredQuestions() {
         return requiredElementsGroupedByType;
     }
 
-    function isRequiredInputIsMissing(requiredElements) {
+    function isRequiredInputMissing(requiredElements) {
 
         let object = returnObjectOfRequiredElementsGroupedByType(requiredElements);
         
