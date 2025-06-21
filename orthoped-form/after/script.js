@@ -204,7 +204,7 @@ const formSteps = Array.from(document.getElementsByClassName("step"));
 const firstStep = formSteps[0];
 const lastStep = formSteps[formSteps.length - 1];
 
-let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions();
+let currentRequiredElements = returnArrayOfInputsFromCurrentRequiredQuestions();
 
 let currentStep = getCurrentStep(formSteps);
 let currentStepIndex = getCurrentStepIndex(formSteps, currentStep);
@@ -222,8 +222,9 @@ function handleCheckboxQuestionValidation() {
     });
 }
 
-function handleCheckboxRequiredMessage(checkbox) {
+function handleCheckboxRequiredMessage(checkbox, associatedCheckboxes) {
     if (checkbox.checked) {
+        console.log('checkbox is checked');
         associatedCheckboxes.forEach(checkbox => checkbox.required = false);                    
     } else if (!isAnyCheckboxChecked(associatedCheckboxes)) {
         associatedCheckboxes.forEach(checkbox => checkbox.required = true);                                   
@@ -318,14 +319,14 @@ handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
     
     next.addEventListener("click", function(event) {
 
-        let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions();
+        let currentRequiredElements = returnArrayOfInputsFromCurrentRequiredQuestions();
 
         if (nextStep) {
 
             hideAllRequiredMessages();
 
-            if (isRequiredInputMissing(requiredElements) === true) {
-                handleRequiredMessages(requiredElements);
+            if (isRequiredInputMissing(currentRequiredElements) === true) {
+                handleRequiredMessages(currentRequiredElements);
             } else {
                 displayNextStep(currentStep, nextStep);
                 currentStep = nextStep;
@@ -349,190 +350,189 @@ handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
 
 
 
-function handleRequiredMessages(requiredElements) {
-    returnArrayOfUnansweredRequiredInputs(requiredElements);
-    displayRequiredMessageOnUnansweredQuestions(requiredElements);
+function handleRequiredMessages(currentRequiredElements) {
+    returnArrayOfUnansweredRequiredInputs(currentRequiredElements);
+    displayRequiredMessage(currentRequiredElements);
 }
     
 
 function returnArrayOfInputsFromCurrentRequiredQuestions() {
     let currentStep = getCurrentStep(formSteps);
-    let requiredElements = Array.from(currentStep.querySelectorAll("[required]"));
-    return requiredElements;
+    let currentRequiredElements = Array.from(currentStep.querySelectorAll("[required]"));
+    return currentRequiredElements;
 }
 
    
-    function returnObjectOfRequiredElementsGroupedByType(requiredElements) {
-        let requiredElementsGroupedByType = {
-            select: [],
-            radio: [],
-            checkbox: [],
-            text: [],
-            textarea: []
-        }; 
-        
-        requiredElements.forEach(element => {
-            if (element.tagName === "INPUT") {
-                if (element.type === "radio") {
-                    requiredElementsGroupedByType.radio.push(element);                    
-                } else if (element.type === "checkbox") {
-                    requiredElementsGroupedByType.checkbox.push(element);
-                } else if (element.type === "text") {
-                    requiredElementsGroupedByType.text.push(element);
-                }
-            } else if (element.tagName === "SELECT") {
-                requiredElementsGroupedByType.select.push(element);
-            } else if (element.tagName === "TEXTAREA") {
-                requiredElementsGroupedByType.textarea.push(element);
+function returnObjectOfRequiredElementsGroupedByType(currentRequiredElements) {
+    let requiredElementsGroupedByType = {
+        select: [],
+        radio: [],
+        checkbox: [],
+        text: [],
+        textarea: []
+    }; 
+    
+    currentRequiredElements.forEach(element => {
+        if (element.tagName === "INPUT") {
+            if (element.type === "radio") {
+                requiredElementsGroupedByType.radio.push(element);                    
+            } else if (element.type === "checkbox") {
+                requiredElementsGroupedByType.checkbox.push(element);
+            } else if (element.type === "text") {
+                requiredElementsGroupedByType.text.push(element);
             }
-        });
-        return requiredElementsGroupedByType;
-    }
-
-    function isRequiredInputMissing(requiredElements) {
-
-        let object = returnObjectOfRequiredElementsGroupedByType(requiredElements);
-        
-        for (const [key, values] of Object.entries(object)) {
-            if (values.length > 0) {
-                if (key === "select") {
-                    for (let value of values) {
-                        if (isOptionSelected(value) === false) return true;
-                    }                
-                } else if (key === "radio") {
-                    for (let value of values) {
-                        if (isRadioClicked(value) === false) return true;
-                    }
-                } else if (key === "checkbox") {
-                    for (let value of values) {
-                        if (isCheckboxChecked(value) === false) return true;
-                    }
-                } else if (key === "text") {
-                    for (let value of values) {
-                        if (isTextInputFilled(value) === false) return true;
-                    }
-                } else if (key === "textarea") {
-                    for (let value of values) {
-                        if (isTextareaFilled(value) === false) return true;
-                    }
-                }
-            }
+        } else if (element.tagName === "SELECT") {
+            requiredElementsGroupedByType.select.push(element);
+        } else if (element.tagName === "TEXTAREA") {
+            requiredElementsGroupedByType.textarea.push(element);
         }
-        return false;
-    }
+    });
+    return requiredElementsGroupedByType;
+}
 
-    function returnArrayOfUnansweredRequiredInputs(requiredElements) {
-        let object = returnObjectOfRequiredElementsGroupedByType(requiredElements);
-        
-        let unansweredRequiredInputs = [];
+function isRequiredInputMissing(currentRequiredElements) {
 
-        for (const [key, values] of Object.entries(object)) {
-            if (values.length > 0) {
-                if (key === "select") {
-                    for (let value of values) {
-                        if (isOptionSelected(value) === false) {
-                            unansweredRequiredInputs.push(value);
-                        }
-                    }                
-                } else if (key === "radio") {
-                    for (let value of values) {
-                        if (isRadioClicked(value) === false) {
-                            unansweredRequiredInputs.push(value);
-                        }
-                    }
-                } else if (key === "checkbox") {
-                    for (let value of values) {
-                        if (isCheckboxChecked(value) === false) {
-                            unansweredRequiredInputs.push(value);
-                        }
-                    }
-                } else if (key === "text") {
-                    for (let value of values) {
-                        if (isTextInputFilled(value) === false) {
-                            unansweredRequiredInputs.push(value);
-                        }
-                    }
-                } else if (key === "textarea") {
-                    for (let value of values) {
-                        if (isTextareaFilled(value) === false) {
-                            unansweredRequiredInputs.push(value);
-                        }
-                    }
+    let object = returnObjectOfRequiredElementsGroupedByType(currentRequiredElements);
+    
+    for (const [key, values] of Object.entries(object)) {
+        if (values.length > 0) {
+            if (key === "select") {
+                for (let value of values) {
+                    if (isOptionSelected(value) === false) return true;
+                }                
+            } else if (key === "radio") {
+                for (let value of values) {
+                    if (isRadioClicked(value) === false) return true;
+                }
+            } else if (key === "checkbox") {
+                for (let value of values) {
+                    if (isCheckboxChecked(value) === false) return true;
+                }
+            } else if (key === "text") {
+                for (let value of values) {
+                    if (isTextInputFilled(value) === false) return true;
+                }
+            } else if (key === "textarea") {
+                for (let value of values) {
+                    if (isTextareaFilled(value) === false) return true;
                 }
             }
-        };
-        
-        return unansweredRequiredInputs;
-    }
-
-    function displayRequiredMessageOnUnansweredQuestions(requiredElements) {
-        let unansweredRequiredInputs = returnArrayOfUnansweredRequiredInputs(requiredElements);
-
-        for (let input of unansweredRequiredInputs) {
-            let questionContainer = input.closest(".question");
-            let requiredMessage = questionContainer.querySelector(".required-message");
-            requiredMessage.classList.remove("hidden");
         }
     }
+    return false;
+}
 
-    function hideAllRequiredMessages() {
-        let allRequiredMessages = Array.from(document.querySelectorAll(".required-message"));
+function returnArrayOfUnansweredRequiredInputs(currentRequiredElements) {
+    let object = returnObjectOfRequiredElementsGroupedByType(currentRequiredElements);
+    
+    let unansweredRequiredInputs = [];
 
-        for (let message of allRequiredMessages) {
-            message.classList.add("hidden");
-        }
-    }
-
-    function returnArrayOfAllAssociatedRadios(value) {      
-        let valueQuestion = value.closest('.question');
-        let allRadiosOfQuestion = Array.from(valueQuestion.querySelectorAll(`input[name="${CSS.escape(value.name)}"]`));
-        return allRadiosOfQuestion;
-    }
-
-    function returnArrayOfAllAssociatedCheckboxes(value) {    
-        let valueQuestion = value.closest('.question');
-        let allCheckboxesOfQuestion = Array.from(valueQuestion.querySelectorAll(`input[name="${CSS.escape(value.name)}"]`));
-        return allCheckboxesOfQuestion;
-    }
-
-    function isRadioClicked(value) {       
-        let allRadios = returnArrayOfAllAssociatedRadios(value);
-        for (let radio of allRadios) {
-            if (radio.checked) {
-                return true;
-            }            
-        }
-        return false;
-    }
-
-    function isCheckboxChecked(value) {  
-        let allAssociatedCheckboxes = returnArrayOfAllAssociatedCheckboxes(value);
-        for (let checkbox of allAssociatedCheckboxes) {
-            if (checkbox.checked) {
-                return true;
+    for (const [key, values] of Object.entries(object)) {
+        if (values.length > 0) {
+            if (key === "select") {
+                for (let value of values) {
+                    if (isOptionSelected(value) === false) {
+                        unansweredRequiredInputs.push(value);
+                    }
+                }                
+            } else if (key === "radio") {
+                for (let value of values) {
+                    if (isRadioClicked(value) === false) {
+                        unansweredRequiredInputs.push(value);
+                    }
+                }
+            } else if (key === "checkbox") {
+                for (let value of values) {
+                    if (isCheckboxChecked(value) === false) {
+                        unansweredRequiredInputs.push(value);
+                    }
+                }
+            } else if (key === "text") {
+                for (let value of values) {
+                    if (isTextInputFilled(value) === false) {
+                        unansweredRequiredInputs.push(value);
+                    }
+                }
+            } else if (key === "textarea") {
+                for (let value of values) {
+                    if (isTextareaFilled(value) === false) {
+                        unansweredRequiredInputs.push(value);
+                    }
+                }
             }
         }
-        return false;
-    }
+    };
+    return unansweredRequiredInputs;
+}
 
-    function isOptionSelected(value) {
+function displayRequiredMessage(currentRequiredElements) {
+    let unansweredRequiredInputs = returnArrayOfUnansweredRequiredInputs(currentRequiredElements);
+
+    for (let input of unansweredRequiredInputs) {
+        let questionContainer = input.closest(".question");
+        let requiredMessage = questionContainer.querySelector(".required-message");
+        requiredMessage.classList.remove("hidden");
+    }
+}
+
+function hideAllRequiredMessages() {
+    let allRequiredMessages = Array.from(document.querySelectorAll(".required-message"));
+
+    for (let message of allRequiredMessages) {
+        message.classList.add("hidden");
+    }
+}
+
+function returnArrayOfAllAssociatedRadios(value) {      
+    let valueQuestion = value.closest('.question');
+    let allRadiosOfQuestion = Array.from(valueQuestion.querySelectorAll(`input[name="${CSS.escape(value.name)}"]`));
+    return allRadiosOfQuestion;
+}
+
+function returnArrayOfAllAssociatedCheckboxes(value) {    
+    let valueQuestion = value.closest('.question');
+    let allCheckboxesOfQuestion = Array.from(valueQuestion.querySelectorAll(`input[name="${CSS.escape(value.name)}"]`));
+    return allCheckboxesOfQuestion;
+}
+
+function isRadioClicked(value) {       
+    let allRadios = returnArrayOfAllAssociatedRadios(value);
+    for (let radio of allRadios) {
+        if (radio.checked) {
+            return true;
+        }            
+    }
+    return false;
+}
+
+function isCheckboxChecked(value) {  
+    let allAssociatedCheckboxes = returnArrayOfAllAssociatedCheckboxes(value);
+    for (let checkbox of allAssociatedCheckboxes) {
+        if (checkbox.checked) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function isOptionSelected(value) {
+    if (value.value !== "") {
+        return true;
+    }       
+    return false;
+}
+
+function isTextInputFilled(value) {
         if (value.value !== "") {
             return true;
-        }       
-        return false;
-    }
+        }
+    return false;
+}
 
-    function isTextInputFilled(value) {
-            if (value.value !== "") {
-                return true;
-            }
-        return false;
-    }
-
-    function isTextareaFilled(value) {
-            if (value.value !== "") {
-                return true;
-            }
-        return false;
-    }
+function isTextareaFilled(value) {
+        if (value.value !== "") {
+            return true;
+        }
+    return false;
+}
 
