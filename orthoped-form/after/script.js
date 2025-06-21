@@ -204,6 +204,11 @@ const formSteps = Array.from(document.getElementsByClassName("step"));
 const firstStep = formSteps[0];
 const lastStep = formSteps[formSteps.length - 1];
 
+let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions();
+
+let currentStep = getCurrentStep(formSteps);
+
+
 
 // Functions
 
@@ -255,10 +260,14 @@ otherCheckbox.addEventListener("change", function() {
 
 
 
-function handleStepDisplay(currentStep, nextStep) {
+function displayNextStep(currentStep, nextStep) {
     currentStep.classList.add("hidden");
     nextStep.classList.remove("hidden");
-    // return currentStep = nextStep;
+}
+
+function displayPreviousStep(currentStep, previousStep) {
+    currentStep.classList.add("hidden");
+    previousStep.classList.remove("hidden");
 }
 
 function displayButton(button) {
@@ -287,7 +296,6 @@ function getCurrentStepIndex(steps) {
     }
 }
 
-let currentStep = getCurrentStep(formSteps);
 
 function handleButtonsDisplay(currentStep, buttons, back, next, submit) {
     hideAllButtons(buttons);
@@ -319,7 +327,7 @@ handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
             if (isRequiredInputIsMissing(requiredElements) === true) {
                 handleRequiredMessages(requiredElements);
             } else {
-                handleStepDisplay(currentStep, nextStep);
+                displayNextStep(currentStep, nextStep);
                 currentStep = nextStep;
                 handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
             }
@@ -330,40 +338,29 @@ handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
         
         let currentStepIndex = getCurrentStepIndex(formSteps, currentStep);
         let previousStep = formSteps[currentStepIndex - 1];
-        let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions(); 
 
         if (previousStep) {
 
-            currentStep.classList.add("hidden");
-            previousStep.classList.remove("hidden");
+            displayPreviousStep(currentStep, previousStep);
             currentStep = previousStep;
-            // Call the function to get required questions for the new current step
-            returnObjectOfRequiredElementsGroupedByType(requiredElements);
-            isRequiredInputIsMissing(requiredElements); // Validate the new current step
-
             handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
         }
-    })
-
-// Handle manual validation
+    });
 
 
 
-    function handleRequiredMessages(requiredElements) {
-        returnArrayOfUnansweredRequiredInputs(requiredElements);
-        displayRequiredMessageOnUnansweredQuestions(requiredElements);
-    }
+function handleRequiredMessages(requiredElements) {
+    returnArrayOfUnansweredRequiredInputs(requiredElements);
+    displayRequiredMessageOnUnansweredQuestions(requiredElements);
+}
     
 
-    function returnArrayOfInputsFromCurrentRequiredQuestions() {
-        let currentStep = getCurrentStep(formSteps);
-        let requiredElements = Array.from(currentStep.querySelectorAll("[required]"));
+function returnArrayOfInputsFromCurrentRequiredQuestions() {
+    let currentStep = getCurrentStep(formSteps);
+    let requiredElements = Array.from(currentStep.querySelectorAll("[required]"));
+    return requiredElements;
+}
 
-        
-        return requiredElements;
-    }
-
-    let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions();
    
     function returnObjectOfRequiredElementsGroupedByType(requiredElements) {
         let requiredElementsGroupedByType = {
@@ -372,7 +369,7 @@ handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
             checkbox: [],
             text: [],
             textarea: []
-        };
+        }; 
         
         requiredElements.forEach(element => {
             if (element.tagName === "INPUT") {
