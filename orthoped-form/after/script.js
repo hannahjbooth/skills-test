@@ -195,14 +195,46 @@ for (let question of questions) {
     let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
     let allCheckboxesArray = Array.from(allCheckboxes);
 
-    function returnAssociatedCheckboxes(checkbox) {
-        let checkboxParent = checkbox.parentElement;
-        let checkboxes = Array.from(checkboxParent.querySelectorAll('input[type="checkbox"]'));
-        return checkboxes;
+    // function returnAssociatedCheckboxes(checkbox) {
+    //     let checkboxParent = checkbox.parentElement;
+    //     let checkboxes = Array.from(checkboxParent.querySelectorAll('input[type="checkbox"]'));
+    //     console.log('checkboxes', checkboxes)
+    //     return checkboxes;
+    // }
+
+    // function returnArrayOfAllAssociatedCheckboxes(value) {    
+    //     let valueQuestion = value.closest('.question');
+    //     let allCheckboxesOfQuestion = Array.from(valueQuestion.querySelectorAll(`input[name="${CSS.escape(value.name)}"]`));
+    //     console.log(allCheckboxesOfQuestion);
+    //     return allCheckboxesOfQuestion;
+    // }
+
+    function toggleRequiredOnCheckboxes(){
+        /*
+        LET array of associated checkboxes
+            IF user changes state of the checkbox
+                ITERATE through checkboxes
+                    IF checkbock is checked
+                        LET required attribute on all checkboxes be removed
+                    IF checkbox isn't checked
+                        IF no checkbox is checked
+                            LET all checkboxes take attribute of required
+
+
+
+        */
+
+        allCheckboxesArray.forEach(checkbox => {
+            checkbox.addEventListener("change", function () {
+            removeRequiredFromAssociatedCheckboxes(checkbox);
+            })
+        })
     }
 
+    toggleRequiredOnCheckboxes();
+
     function removeRequiredFromAssociatedCheckboxes(checkbox) {
-        let checkboxes = returnAssociatedCheckboxes(checkbox);
+        let checkboxes = returnArrayOfAllAssociatedCheckboxes(checkbox);
         for (let checkbox of checkboxes) {
             if (checkbox.hasAttribute("required")) {
                 checkbox.removeAttribute("required");
@@ -210,11 +242,7 @@ for (let question of questions) {
         }          
     }
 
-    allCheckboxesArray.forEach(checkbox => {
-        checkbox.addEventListener("change", function () {
-            removeRequiredFromAssociatedCheckboxes(checkbox);
-        })
-    })
+
 
 // Handling the 'Other' checkbox's text input, so that it becomes required when the checkbox is selected
 
@@ -222,7 +250,7 @@ for (let question of questions) {
     let otherTextInput = document.getElementById("q8-a7-text");
 
     function handleRequiredOnTextInput(checkbox) {
-        if (checkbox.checked) {
+        if (!checkbox.checked) {
             otherTextInput.setAttribute("required", "");
         } else {
             otherTextInput.removeAttribute("required");
@@ -231,6 +259,7 @@ for (let question of questions) {
 
     otherCheckbox.addEventListener("change", function() {
         handleRequiredOnTextInput(otherCheckbox);
+        console.log('event listener on othercheckbox is responsive');
     });
 
 
@@ -518,8 +547,9 @@ for (let question of questions) {
     }
 
     function checkCheckboxIsClicked(value) {  
-        let allCheckboxes = returnArrayOfAllAssociatedCheckboxes(value);
-        for (let checkbox of allCheckboxes) {
+        let allAssociatedCheckboxes = returnArrayOfAllAssociatedCheckboxes(value);
+        // console.log(allAssociatedCheckboxes);
+        for (let checkbox of allAssociatedCheckboxes) {
             if (checkbox.checked) {
                 return true;
             }
