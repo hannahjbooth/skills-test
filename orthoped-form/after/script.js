@@ -210,6 +210,90 @@ let currentStep = getCurrentStep(formSteps);
 let currentStepIndex = getCurrentStepIndex(formSteps, currentStep);
 let nextStep = formSteps[currentStepIndex + 1];
 
+// Boolean functions
+
+function isAnyCheckboxChecked(checkboxArray) {
+    for (checkbox of checkboxArray) {
+        if (checkbox.checked) {
+            return true;
+        }
+    }
+    return false;  
+}
+
+function isRequiredInputMissing(currentRequiredElements) {
+
+    let object = returnObjectOfRequiredElementsGroupedByType(currentRequiredElements);
+    
+    for (const [key, values] of Object.entries(object)) {
+        if (values.length > 0) {
+            if (key === "select") {
+                for (let value of values) {
+                    if (isOptionSelected(value) === false) return true;
+                }                
+            } else if (key === "radio") {
+                for (let value of values) {
+                    if (isRadioClicked(value) === false) return true;
+                }
+            } else if (key === "checkbox") {
+                for (let value of values) {
+                    if (isCheckboxChecked(value) === false) return true;
+                }
+            } else if (key === "text") {
+                for (let value of values) {
+                    if (isTextInputFilled(value) === false) return true;
+                }
+            } else if (key === "textarea") {
+                for (let value of values) {
+                    if (isTextareaFilled(value) === false) return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function isRadioClicked(value) {       
+    let allRadios = returnArrayOfAllAssociatedRadios(value);
+    for (let radio of allRadios) {
+        if (radio.checked) {
+            return true;
+        }            
+    }
+    return false;
+}
+
+function isCheckboxChecked(value) {  
+    let allAssociatedCheckboxes = returnArrayOfAllAssociatedCheckboxes(value);
+    for (let checkbox of allAssociatedCheckboxes) {
+        if (checkbox.checked) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function isOptionSelected(value) {
+    if (value.value !== "") {
+        return true;
+    }       
+    return false;
+}
+
+function isTextInputFilled(value) {
+        if (value.value !== "") {
+            return true;
+        }
+    return false;
+}
+
+function isTextareaFilled(value) {
+        if (value.value !== "") {
+            return true;
+        }
+    return false;
+}
+
 
 // Functions
 
@@ -234,14 +318,7 @@ function handleCheckboxRequiredMessage(checkbox, associatedCheckboxes) {
 handleCheckboxQuestionValidation();
 
 
-function isAnyCheckboxChecked(checkboxArray) {
-    for (checkbox of checkboxArray) {
-        if (checkbox.checked) {
-            return true;
-        }
-    }
-    return false;  
-}
+
 
 
 function handleRequiredOnTextInput(checkbox) {
@@ -260,7 +337,7 @@ otherCheckbox.addEventListener("change", function() {
 
 
 
-
+// Display functions
 
 function displayNextStep(currentStep, nextStep) {
     currentStep.classList.add("hidden");
@@ -282,6 +359,21 @@ function hideAllButtons(buttons) {
     }   
 }
 
+function handleButtonsDisplay(currentStep, buttons, back, next, submit) {
+    hideAllButtons(buttons);
+    if (currentStep === firstStep) {
+        displayButton(next);
+    } else if (currentStep === lastStep) {
+        displayButton(back);
+        displayButton(submit);
+    } else {
+        displayButton(next);
+        displayButton(back);
+    }
+}
+
+
+
 function getCurrentStep(steps) {
     for (let step of steps) {
         if (!step.classList.contains("hidden")) {
@@ -299,18 +391,6 @@ function getCurrentStepIndex(steps) {
 }
 
 
-function handleButtonsDisplay(currentStep, buttons, back, next, submit) {
-    hideAllButtons(buttons);
-    if (currentStep === firstStep) {
-        displayButton(next);
-    } else if (currentStep === lastStep) {
-        displayButton(back);
-        displayButton(submit);
-    } else {
-        displayButton(next);
-        displayButton(back);
-    }
-}
 
 handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
 
@@ -390,37 +470,7 @@ function returnObjectOfRequiredElementsGroupedByType(currentRequiredElements) {
     return requiredElementsGroupedByType;
 }
 
-function isRequiredInputMissing(currentRequiredElements) {
 
-    let object = returnObjectOfRequiredElementsGroupedByType(currentRequiredElements);
-    
-    for (const [key, values] of Object.entries(object)) {
-        if (values.length > 0) {
-            if (key === "select") {
-                for (let value of values) {
-                    if (isOptionSelected(value) === false) return true;
-                }                
-            } else if (key === "radio") {
-                for (let value of values) {
-                    if (isRadioClicked(value) === false) return true;
-                }
-            } else if (key === "checkbox") {
-                for (let value of values) {
-                    if (isCheckboxChecked(value) === false) return true;
-                }
-            } else if (key === "text") {
-                for (let value of values) {
-                    if (isTextInputFilled(value) === false) return true;
-                }
-            } else if (key === "textarea") {
-                for (let value of values) {
-                    if (isTextareaFilled(value) === false) return true;
-                }
-            }
-        }
-    }
-    return false;
-}
 
 function returnArrayOfUnansweredRequiredInputs(currentRequiredElements) {
     let object = returnObjectOfRequiredElementsGroupedByType(currentRequiredElements);
@@ -495,44 +545,4 @@ function returnArrayOfAllAssociatedCheckboxes(value) {
     return allCheckboxesOfQuestion;
 }
 
-function isRadioClicked(value) {       
-    let allRadios = returnArrayOfAllAssociatedRadios(value);
-    for (let radio of allRadios) {
-        if (radio.checked) {
-            return true;
-        }            
-    }
-    return false;
-}
-
-function isCheckboxChecked(value) {  
-    let allAssociatedCheckboxes = returnArrayOfAllAssociatedCheckboxes(value);
-    for (let checkbox of allAssociatedCheckboxes) {
-        if (checkbox.checked) {
-            return true;
-        }
-    }
-    return false;
-}
-
-function isOptionSelected(value) {
-    if (value.value !== "") {
-        return true;
-    }       
-    return false;
-}
-
-function isTextInputFilled(value) {
-        if (value.value !== "") {
-            return true;
-        }
-    return false;
-}
-
-function isTextareaFilled(value) {
-        if (value.value !== "") {
-            return true;
-        }
-    return false;
-}
 
