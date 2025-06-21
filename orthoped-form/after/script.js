@@ -393,44 +393,32 @@ function returnArrayOfInputsFromCurrentRequiredQuestions() {
 
         let object = returnObjectOfRequiredElementsGroupedByType(requiredElements);
         
-        let missingInput = false;
-
         for (const [key, values] of Object.entries(object)) {
             if (values.length > 0) {
                 if (key === "select") {
                     for (let value of values) {
-                        if (isOptionSelected(value) === false) {
-                            missingInput = true;
-                        }
+                        if (isOptionSelected(value) === false) return true;
                     }                
                 } else if (key === "radio") {
                     for (let value of values) {
-                        if (isRadioClicked(value) === false) {
-                            missingInput = true;
-                        }
+                        if (isRadioClicked(value) === false) return true;
                     }
                 } else if (key === "checkbox") {
                     for (let value of values) {
-                        if (isCheckboxChecked(value) === false) {
-                            missingInput = true;
-                        }
+                        if (isCheckboxChecked(value) === false) return true;
                     }
                 } else if (key === "text") {
                     for (let value of values) {
-                        if (isTextInputFilled(value) === false) {
-                            missingInput = true;
-                        }
+                        if (isTextInputFilled(value) === false) return true;
                     }
                 } else if (key === "textarea") {
                     for (let value of values) {
-                        if (isTextareaFilled(value) === false) {
-                            missingInput = true;
-                        }
+                        if (isTextareaFilled(value) === false) return true;
                     }
                 }
             }
-        };
-        return missingInput;
+        }
+        return false;
     }
 
     function returnArrayOfUnansweredRequiredInputs(requiredElements) {
