@@ -207,7 +207,8 @@ const lastStep = formSteps[formSteps.length - 1];
 let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions();
 
 let currentStep = getCurrentStep(formSteps);
-
+let currentStepIndex = getCurrentStepIndex(formSteps, currentStep);
+let nextStep = formSteps[currentStepIndex + 1];
 
 
 // Functions
@@ -313,8 +314,7 @@ function handleButtonsDisplay(currentStep, buttons, back, next, submit) {
 handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
 
 
-    let currentStepIndex = getCurrentStepIndex(formSteps, currentStep);
-    let nextStep = formSteps[currentStepIndex + 1];
+
     
     next.addEventListener("click", function(event) {
 
