@@ -295,30 +295,25 @@ for (let question of questions) {
         let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions(); // I moved this from inside the below if statement
 
         if (nextStep) {
-            // This was unused inside this event listener returnsObjectOfRequiredElementsGroupedByType(requiredElements);
 
             hidesAllRequiredMessages();
 
             if (checksIfRequiredInputIsMissing(requiredElements) === true) {
-                returnsArrayOfUnansweredRequiredInputs(requiredElements);
-                console.log("updated unanswered questions", returnsArrayOfUnansweredRequiredInputs(requiredElements));
-                displaysRequiredMessageOnUnansweredQuestions(requiredElements);
-
+                handleRequiredMessages(requiredElements);
             } else {
                 currentStep.classList.add("hidden");
                 nextStep.classList.remove("hidden");
                 currentStep = nextStep;
-
                 handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
             }
         }
     });
 
-
     back.addEventListener("click", function(event) {
         
         let currentStepIndex = getCurrentStepIndex(formSteps, currentStep);
         let previousStep = formSteps[currentStepIndex - 1];
+        let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions(); 
 
         if (previousStep) {
 
@@ -326,7 +321,6 @@ for (let question of questions) {
             previousStep.classList.remove("hidden");
             currentStep = previousStep;
             // Call the function to get required questions for the new current step
-            let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions(); 
             returnsObjectOfRequiredElementsGroupedByType(requiredElements);
             checksIfRequiredInputIsMissing(requiredElements); // Validate the new current step
 
@@ -335,6 +329,13 @@ for (let question of questions) {
     })
 
 // Handle manual validation
+
+    function handleRequiredMessages(requiredElements) {
+        returnsArrayOfUnansweredRequiredInputs(requiredElements);
+        console.log("updated unanswered questions", returnsArrayOfUnansweredRequiredInputs(requiredElements));
+        displaysRequiredMessageOnUnansweredQuestions(requiredElements);
+    }
+    
 
     function returnArrayOfInputsFromCurrentRequiredQuestions() {
         let currentStep = getCurrentStep(formSteps);
@@ -484,27 +485,17 @@ for (let question of questions) {
     }
 
     function returnsArrayOfAllAssociatedRadios(value) {      
-        let parentElement = value.parentElement;
-        let allChildElements = Array.from(parentElement.children);
-        let allChildRadios = [];
-        allChildElements.forEach(child => {
-            if (child.tagName === "INPUT" && child.type === "radio") {
-                allChildRadios.push(child);
-            }
-        });
-        return allChildRadios;
+        let valueQuestion = value.closest('.question');
+        let allRadiosOfQuestion = Array.from(valueQuestion.querySelectorAll(`input[name="${CSS.escape(value.name)}"]`));
+        console.log(allRadiosOfQuestion);
+        return allRadiosOfQuestion;
     }
 
-    function returnsArrayOfAllAssociatedCheckboxes(value) {      
-        let parentElement = value.parentElement;
-        let allChildElements = Array.from(parentElement.children);
-        let allChildCheckboxes = [];
-        allChildElements.forEach(child => {
-            if (child.tagName === "INPUT" && child.type === "checkbox") {
-                allChildCheckboxes.push(child);
-            }
-        });
-        return allChildCheckboxes;
+    function returnsArrayOfAllAssociatedCheckboxes(value) {    
+        let valueQuestion = value.closest('.question');
+        let allCheckboxesOfQuestion = Array.from(valueQuestion.querySelectorAll(`input[name="${CSS.escape(value.name)}"]`));
+        console.log(allCheckboxesOfQuestion);
+        return allCheckboxesOfQuestion;
     }
 
     function checksRadioIsClicked(value) {       
