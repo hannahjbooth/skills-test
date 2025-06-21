@@ -195,54 +195,34 @@ for (let question of questions) {
     let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
     let allCheckboxesArray = Array.from(allCheckboxes);
 
-    // function returnAssociatedCheckboxes(checkbox) {
-    //     let checkboxParent = checkbox.parentElement;
-    //     let checkboxes = Array.from(checkboxParent.querySelectorAll('input[type="checkbox"]'));
-    //     console.log('checkboxes', checkboxes)
-    //     return checkboxes;
-    // }
-
-    // function returnArrayOfAllAssociatedCheckboxes(value) {    
-    //     let valueQuestion = value.closest('.question');
-    //     let allCheckboxesOfQuestion = Array.from(valueQuestion.querySelectorAll(`input[name="${CSS.escape(value.name)}"]`));
-    //     console.log(allCheckboxesOfQuestion);
-    //     return allCheckboxesOfQuestion;
-    // }
-
-    function toggleRequiredOnCheckboxes(){
-        /*
-        LET array of associated checkboxes
-            IF user changes state of the checkbox
-                ITERATE through checkboxes
-                    IF checkbock is checked
-                        LET required attribute on all checkboxes be removed
-                    IF checkbox isn't checked
-                        IF no checkbox is checked
-                            LET all checkboxes take attribute of required
-
-
-
-        */
-
+    function handleCheckboxQuestionValidation() {
         allCheckboxesArray.forEach(checkbox => {
             checkbox.addEventListener("change", function () {
-            removeRequiredFromAssociatedCheckboxes(checkbox);
-            })
-        })
+                const associatedCheckboxes = returnArrayOfAllAssociatedCheckboxes(checkbox);
+                handleCheckboxRequiredMessage(checkbox, associatedCheckboxes);
+            });
+        });
     }
 
-    toggleRequiredOnCheckboxes();
+    function handleCheckboxRequiredMessage(checkbox) {
+        if (checkbox.checked) {
+            associatedCheckboxes.forEach(checkbox => checkbox.required = false);                    
+        } else if (!isAnyCheckboxChecked(associatedCheckboxes)) {
+            associatedCheckboxes.forEach(checkbox => checkbox.required = true);                                   
+        }
+    }
 
-    function removeRequiredFromAssociatedCheckboxes(checkbox) {
-        let checkboxes = returnArrayOfAllAssociatedCheckboxes(checkbox);
-        for (let checkbox of checkboxes) {
-            if (checkbox.hasAttribute("required")) {
-                checkbox.removeAttribute("required");
+    handleCheckboxQuestionValidation();
+
+
+    function isAnyCheckboxChecked(checkboxArray) {
+        for (checkbox of checkboxArray) {
+            if (checkbox.checked) {
+                return true;
             }
-        }          
+        }
+        return false;  
     }
-
-
 
 // Handling the 'Other' checkbox's text input, so that it becomes required when the checkbox is selected
 
@@ -250,14 +230,15 @@ for (let question of questions) {
     let otherTextInput = document.getElementById("q8-a7-text");
 
     function handleRequiredOnTextInput(checkbox) {
-        if (!checkbox.checked) {
-            otherTextInput.setAttribute("required", "");
+        if (checkbox.checked) {
+            otherTextInput.required = true;
         } else {
-            otherTextInput.removeAttribute("required");
+            otherTextInput.required = false;
         }
     }
 
     otherCheckbox.addEventListener("change", function() {
+
         handleRequiredOnTextInput(otherCheckbox);
         console.log('event listener on othercheckbox is responsive');
     });
