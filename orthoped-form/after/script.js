@@ -195,14 +195,14 @@ for (let question of questions) {
     let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
     let allCheckboxesArray = Array.from(allCheckboxes);
 
-    function returnsAllAssociatedCheckboxes(checkbox) {
+    function returnAssociatedCheckboxes(checkbox) {
         let checkboxParent = checkbox.parentElement;
         let checkboxes = Array.from(checkboxParent.querySelectorAll('input[type="checkbox"]'));
         return checkboxes;
     }
 
     function removeRequiredFromAssociatedCheckboxes(checkbox) {
-        let checkboxes = returnsAllAssociatedCheckboxes(checkbox);
+        let checkboxes = returnAssociatedCheckboxes(checkbox);
         for (let checkbox of checkboxes) {
             if (checkbox.hasAttribute("required")) {
                 checkbox.removeAttribute("required");
@@ -296,9 +296,9 @@ for (let question of questions) {
 
         if (nextStep) {
 
-            hidesAllRequiredMessages();
+            hideAllRequiredMessages();
 
-            if (checksIfRequiredInputIsMissing(requiredElements) === true) {
+            if (isRequiredInputIsMissing(requiredElements) === true) {
                 handleRequiredMessages(requiredElements);
             } else {
                 currentStep.classList.add("hidden");
@@ -321,8 +321,8 @@ for (let question of questions) {
             previousStep.classList.remove("hidden");
             currentStep = previousStep;
             // Call the function to get required questions for the new current step
-            returnsObjectOfRequiredElementsGroupedByType(requiredElements);
-            checksIfRequiredInputIsMissing(requiredElements); // Validate the new current step
+            returnObjectOfRequiredElementsGroupedByType(requiredElements);
+            isRequiredInputIsMissing(requiredElements); // Validate the new current step
 
             handleButtonsDisplay(currentStep, formButtons, back, next, submit, formSteps);
         }
@@ -331,9 +331,9 @@ for (let question of questions) {
 // Handle manual validation
 
     function handleRequiredMessages(requiredElements) {
-        returnsArrayOfUnansweredRequiredInputs(requiredElements);
-        console.log("updated unanswered questions", returnsArrayOfUnansweredRequiredInputs(requiredElements));
-        displaysRequiredMessageOnUnansweredQuestions(requiredElements);
+        returnArrayOfUnansweredRequiredInputs(requiredElements);
+        console.log("updated unanswered questions", returnArrayOfUnansweredRequiredInputs(requiredElements));
+        displayRequiredMessageOnUnansweredQuestions(requiredElements);
     }
     
 
@@ -347,7 +347,7 @@ for (let question of questions) {
 
     let requiredElements = returnArrayOfInputsFromCurrentRequiredQuestions();
    
-    function returnsObjectOfRequiredElementsGroupedByType(requiredElements) {
+    function returnObjectOfRequiredElementsGroupedByType(requiredElements) {
         let requiredElementsGroupedByType = {
             select: [],
             radio: [],
@@ -375,9 +375,9 @@ for (let question of questions) {
         return requiredElementsGroupedByType;
     }
 
-    function checksIfRequiredInputIsMissing(requiredElements) {
+    function isRequiredInputIsMissing(requiredElements) {
 
-        let object = returnsObjectOfRequiredElementsGroupedByType(requiredElements);
+        let object = returnObjectOfRequiredElementsGroupedByType(requiredElements);
         
         let missingInput = false;
 
@@ -385,31 +385,31 @@ for (let question of questions) {
             if (values.length > 0) {
                 if (key === "select") {
                     for (let value of values) {
-                        if (checksOptionIsSelected(value) === false) {
+                        if (checkOptionIsSelected(value) === false) {
                             missingInput = true;
                         }
                     }                
                 } else if (key === "radio") {
                     for (let value of values) {
-                        if (checksRadioIsClicked(value) === false) {
+                        if (checkRadioIsClicked(value) === false) {
                             missingInput = true;
                         }
                     }
                 } else if (key === "checkbox") {
                     for (let value of values) {
-                        if (checksCheckboxIsClicked(value) === false) {
+                        if (checkCheckboxIsClicked(value) === false) {
                             missingInput = true;
                         }
                     }
                 } else if (key === "text") {
                     for (let value of values) {
-                        if (checksTextInputIsFilled(value) === false) {
+                        if (checkTextInputIsFilled(value) === false) {
                             missingInput = true;
                         }
                     }
                 } else if (key === "textarea") {
                     for (let value of values) {
-                        if (checksTextareaIsFilled(value) === false) {
+                        if (checkTextareaIsFilled(value) === false) {
                             missingInput = true;
                         }
                     }
@@ -419,8 +419,8 @@ for (let question of questions) {
         return missingInput;
     }
 
-    function returnsArrayOfUnansweredRequiredInputs(requiredElements) {
-        let object = returnsObjectOfRequiredElementsGroupedByType(requiredElements);
+    function returnArrayOfUnansweredRequiredInputs(requiredElements) {
+        let object = returnObjectOfRequiredElementsGroupedByType(requiredElements);
         console.log('testing object', object);
         
         let unansweredRequiredInputs = [];
@@ -429,31 +429,31 @@ for (let question of questions) {
             if (values.length > 0) {
                 if (key === "select") {
                     for (let value of values) {
-                        if (checksOptionIsSelected(value) === false) {
+                        if (checkOptionIsSelected(value) === false) {
                             unansweredRequiredInputs.push(value);
                         }
                     }                
                 } else if (key === "radio") {
                     for (let value of values) {
-                        if (checksRadioIsClicked(value) === false) {
+                        if (checkRadioIsClicked(value) === false) {
                             unansweredRequiredInputs.push(value);
                         }
                     }
                 } else if (key === "checkbox") {
                     for (let value of values) {
-                        if (checksCheckboxIsClicked(value) === false) {
+                        if (checkCheckboxIsClicked(value) === false) {
                             unansweredRequiredInputs.push(value);
                         }
                     }
                 } else if (key === "text") {
                     for (let value of values) {
-                        if (checksTextInputIsFilled(value) === false) {
+                        if (checkTextInputIsFilled(value) === false) {
                             unansweredRequiredInputs.push(value);
                         }
                     }
                 } else if (key === "textarea") {
                     for (let value of values) {
-                        if (checksTextareaIsFilled(value) === false) {
+                        if (checkTextareaIsFilled(value) === false) {
                             unansweredRequiredInputs.push(value);
                         }
                     }
@@ -464,8 +464,8 @@ for (let question of questions) {
         return unansweredRequiredInputs;
     }
 
-    function displaysRequiredMessageOnUnansweredQuestions(requiredElements) {
-        let unansweredRequiredInputs = returnsArrayOfUnansweredRequiredInputs(requiredElements);
+    function displayRequiredMessageOnUnansweredQuestions(requiredElements) {
+        let unansweredRequiredInputs = returnArrayOfUnansweredRequiredInputs(requiredElements);
         console.log("unansweredRequiredInputs:", unansweredRequiredInputs);
 
         for (let input of unansweredRequiredInputs) {
@@ -475,7 +475,7 @@ for (let question of questions) {
         }
     }
 
-    function hidesAllRequiredMessages() {
+    function hideAllRequiredMessages() {
         let allRequiredMessages = Array.from(document.querySelectorAll(".required-message"));
         console.log("testing all required message", allRequiredMessages);
 
@@ -484,22 +484,22 @@ for (let question of questions) {
         }
     }
 
-    function returnsArrayOfAllAssociatedRadios(value) {      
+    function returnArrayOfAllAssociatedRadios(value) {      
         let valueQuestion = value.closest('.question');
         let allRadiosOfQuestion = Array.from(valueQuestion.querySelectorAll(`input[name="${CSS.escape(value.name)}"]`));
         console.log(allRadiosOfQuestion);
         return allRadiosOfQuestion;
     }
 
-    function returnsArrayOfAllAssociatedCheckboxes(value) {    
+    function returnArrayOfAllAssociatedCheckboxes(value) {    
         let valueQuestion = value.closest('.question');
         let allCheckboxesOfQuestion = Array.from(valueQuestion.querySelectorAll(`input[name="${CSS.escape(value.name)}"]`));
         console.log(allCheckboxesOfQuestion);
         return allCheckboxesOfQuestion;
     }
 
-    function checksRadioIsClicked(value) {       
-        let allRadios = returnsArrayOfAllAssociatedRadios(value);
+    function checkRadioIsClicked(value) {       
+        let allRadios = returnArrayOfAllAssociatedRadios(value);
         for (let radio of allRadios) {
             if (radio.checked) {
                 return true;
@@ -508,8 +508,8 @@ for (let question of questions) {
         return false;
     }
 
-    function checksCheckboxIsClicked(value) {  
-        let allCheckboxes = returnsArrayOfAllAssociatedCheckboxes(value);
+    function checkCheckboxIsClicked(value) {  
+        let allCheckboxes = returnArrayOfAllAssociatedCheckboxes(value);
         for (let checkbox of allCheckboxes) {
             if (checkbox.checked) {
                 return true;
@@ -518,21 +518,21 @@ for (let question of questions) {
         return false;
     }
 
-    function checksOptionIsSelected(value) {
+    function checkOptionIsSelected(value) {
         if (value.value !== "") {
             return true;
         }       
         return false;
     }
 
-    function checksTextInputIsFilled(value) {
+    function checkTextInputIsFilled(value) {
             if (value.value !== "") {
                 return true;
             }
         return false;
     }
 
-    function checksTextareaIsFilled(value) {
+    function checkTextareaIsFilled(value) {
             if (value.value !== "") {
                 return true;
             }
