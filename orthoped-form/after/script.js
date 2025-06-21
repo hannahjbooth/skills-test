@@ -423,31 +423,31 @@ for (let question of questions) {
             if (values.length > 0) {
                 if (key === "select") {
                     for (let value of values) {
-                        if (checkOptionIsSelected(value) === false) {
+                        if (isOptionSelected(value) === false) {
                             missingInput = true;
                         }
                     }                
                 } else if (key === "radio") {
                     for (let value of values) {
-                        if (checkRadioIsClicked(value) === false) {
+                        if (isRadioClicked(value) === false) {
                             missingInput = true;
                         }
                     }
                 } else if (key === "checkbox") {
                     for (let value of values) {
-                        if (checkCheckboxIsClicked(value) === false) {
+                        if (isCheckboxChecked(value) === false) {
                             missingInput = true;
                         }
                     }
                 } else if (key === "text") {
                     for (let value of values) {
-                        if (checkTextInputIsFilled(value) === false) {
+                        if (isTextInputFilled(value) === false) {
                             missingInput = true;
                         }
                     }
                 } else if (key === "textarea") {
                     for (let value of values) {
-                        if (checkTextareaIsFilled(value) === false) {
+                        if (isTextareaFilled(value) === false) {
                             missingInput = true;
                         }
                     }
@@ -467,31 +467,31 @@ for (let question of questions) {
             if (values.length > 0) {
                 if (key === "select") {
                     for (let value of values) {
-                        if (checkOptionIsSelected(value) === false) {
+                        if (isOptionSelected(value) === false) {
                             unansweredRequiredInputs.push(value);
                         }
                     }                
                 } else if (key === "radio") {
                     for (let value of values) {
-                        if (checkRadioIsClicked(value) === false) {
+                        if (isRadioClicked(value) === false) {
                             unansweredRequiredInputs.push(value);
                         }
                     }
                 } else if (key === "checkbox") {
                     for (let value of values) {
-                        if (checkCheckboxIsClicked(value) === false) {
+                        if (isCheckboxChecked(value) === false) {
                             unansweredRequiredInputs.push(value);
                         }
                     }
                 } else if (key === "text") {
                     for (let value of values) {
-                        if (checkTextInputIsFilled(value) === false) {
+                        if (isTextInputFilled(value) === false) {
                             unansweredRequiredInputs.push(value);
                         }
                     }
                 } else if (key === "textarea") {
                     for (let value of values) {
-                        if (checkTextareaIsFilled(value) === false) {
+                        if (isTextareaFilled(value) === false) {
                             unansweredRequiredInputs.push(value);
                         }
                     }
@@ -536,7 +536,7 @@ for (let question of questions) {
         return allCheckboxesOfQuestion;
     }
 
-    function checkRadioIsClicked(value) {       
+    function isRadioClicked(value) {       
         let allRadios = returnArrayOfAllAssociatedRadios(value);
         for (let radio of allRadios) {
             if (radio.checked) {
@@ -546,7 +546,7 @@ for (let question of questions) {
         return false;
     }
 
-    function checkCheckboxIsClicked(value) {  
+    function isCheckboxChecked(value) {  
         let allAssociatedCheckboxes = returnArrayOfAllAssociatedCheckboxes(value);
         // console.log(allAssociatedCheckboxes);
         for (let checkbox of allAssociatedCheckboxes) {
@@ -557,21 +557,21 @@ for (let question of questions) {
         return false;
     }
 
-    function checkOptionIsSelected(value) {
+    function isOptionSelected(value) {
         if (value.value !== "") {
             return true;
         }       
         return false;
     }
 
-    function checkTextInputIsFilled(value) {
+    function isTextInputFilled(value) {
             if (value.value !== "") {
                 return true;
             }
         return false;
     }
 
-    function checkTextareaIsFilled(value) {
+    function isTextareaFilled(value) {
             if (value.value !== "") {
                 return true;
             }
