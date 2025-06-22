@@ -209,21 +209,10 @@ let currentRequiredElements = returnArrayOfCurrentlyRequiredElements();
 let currentStep = getCurrentStep(formSteps);
 
 
-// Boolean functions
+// Boolean validation functions
 
-function isAnyCheckboxChecked(checkboxArray) {
-    for (checkbox of checkboxArray) {
-        if (checkbox.checked) {
-            return true;
-        }
-    }
-    return false;  
-}
-
-function isRequiredInputMissing(currentRequiredElements) {
-    console.log(currentRequiredElements);
-    let object = returnObjectOfRequiredElementsGroupedByType(currentRequiredElements);
-    console.log('current reauired elements object', object);
+function isRequiredQuestionUnanswered(currentRequiredElements) {
+    let object = returnRequiredElementsByType(currentRequiredElements);
     
     for (const [key, values] of Object.entries(object)) {
         if (values.length > 0) {
@@ -273,6 +262,15 @@ function isCheckboxChecked(value) {
     return false;
 }
 
+function isAnyCheckboxChecked(checkboxArray) {
+    for (checkbox of checkboxArray) {
+        if (checkbox.checked) {
+            return true;
+        }
+    }
+    return false;  
+}
+
 function isOptionSelected(value) {
     if (value.value !== "") {
         return true;
@@ -301,14 +299,13 @@ function handleCheckboxQuestionValidation() {
     allCheckboxesArray.forEach(checkbox => {
         checkbox.addEventListener("change", function () {
             const associatedCheckboxes = returnArrayOfAllAssociatedCheckboxes(checkbox);
-            handleCheckboxRequiredMessage(checkbox, associatedCheckboxes);
+            handleCheckboxRequiredAttributes(checkbox, associatedCheckboxes);
         });
     });
 }
 
-function handleCheckboxRequiredMessage(checkbox, associatedCheckboxes) {
+function handleCheckboxRequiredAttributes(checkbox, associatedCheckboxes) {
     if (checkbox.checked) {
-        console.log('checkbox is checked');
         associatedCheckboxes.forEach(checkbox => checkbox.required = false);                    
     } else if (!isAnyCheckboxChecked(associatedCheckboxes)) {
         associatedCheckboxes.forEach(checkbox => checkbox.required = true);                                   
@@ -321,7 +318,7 @@ handleCheckboxQuestionValidation();
 
 
 
-function handleRequiredOnTextInput(checkbox) {
+function handleRequiredAttributeOnTextInput(checkbox) {
     if (checkbox.checked) {
         otherTextInput.required = true;
     } else {
@@ -343,6 +340,22 @@ function displayNextStep(currentStep, nextStep) {
 function displayPreviousStep(currentStep, previousStep) {
     currentStep.classList.add("hidden");
     previousStep.classList.remove("hidden");
+}
+
+function getCurrentStep(steps) {
+    for (let step of steps) {
+        if (!step.classList.contains("hidden")) {
+            return step;
+        }
+    }
+}
+
+function getCurrentStepIndex(steps) {
+    for (let i = 0; i < steps.length; i++) {
+        if (steps[i] === currentStep) {
+            return i;
+        }
+    }
 }
 
 // Button display functions
@@ -372,32 +385,13 @@ function handleButtonsDisplay(currentStep, formButtons) {
 }
 
 
-
-function getCurrentStep(steps) {
-    for (let step of steps) {
-        if (!step.classList.contains("hidden")) {
-            return step;
-        }
-    }
-}
-
-function getCurrentStepIndex(steps) {
-    for (let i = 0; i < steps.length; i++) {
-        if (steps[i] === currentStep) {
-            return i;
-        }
-    }
-}
-
-
-
 handleButtonsDisplay(currentStep, formButtons);
 
 
 // Event Listeners
 
 otherCheckbox.addEventListener("change", function() {
-    handleRequiredOnTextInput(otherCheckbox);
+    handleRequiredAttributeOnTextInput(otherCheckbox);
 });
     
 next.addEventListener("click", function(event) {
@@ -411,8 +405,7 @@ next.addEventListener("click", function(event) {
 
         hideAllRequiredMessages();
 
-        if (isRequiredInputMissing(currentRequiredElements) === true) {
-            console.log('required input is missing')
+        if (isRequiredQuestionUnanswered(currentRequiredElements) === true) {
             handleRequiredMessages(currentRequiredElements);
         } else {
             displayNextStep(currentStep, nextStep);
@@ -436,18 +429,17 @@ back.addEventListener("click", function(event) {
 });
 
 
-// 'Required' message display
+// 'Required' message display functions
 
 function handleRequiredMessages(currentRequiredElements) {
-    returnArrayOfUnansweredRequiredInputs(currentRequiredElements);
-    displayRequiredMessage(currentRequiredElements);
+    let unansweredRequiredFields = returnArrayOfUnansweredRequiredFields(currentRequiredElements);
+    displayRequiredMessage(unansweredRequiredFields);
 }
 
-function displayRequiredMessage(currentRequiredElements) {
-    let unansweredRequiredInputs = returnArrayOfUnansweredRequiredInputs(currentRequiredElements);
+function displayRequiredMessage(unansweredRequiredFields) {
 
-    for (let input of unansweredRequiredInputs) {
-        let questionContainer = input.closest(".question");
+    for (let field of unansweredRequiredFields) {
+        let questionContainer = field.closest(".question");
         let requiredMessage = questionContainer.querySelector(".required-message");
         requiredMessage.classList.remove("hidden");
     }
@@ -469,7 +461,7 @@ function returnArrayOfCurrentlyRequiredElements() {
 }
 
    
-function returnObjectOfRequiredElementsGroupedByType(currentRequiredElements) {
+function returnRequiredElementsByType(currentRequiredElements) {
     let requiredElementsGroupedByType = {
         select: [],
         radio: [],
@@ -498,47 +490,48 @@ function returnObjectOfRequiredElementsGroupedByType(currentRequiredElements) {
 
 
 
-function returnArrayOfUnansweredRequiredInputs(currentRequiredElements) {
-    let object = returnObjectOfRequiredElementsGroupedByType(currentRequiredElements);
+function returnArrayOfUnansweredRequiredFields(currentRequiredElements) {
+    let object = returnRequiredElementsByType(currentRequiredElements);
     
-    let unansweredRequiredInputs = [];
+    let unansweredRequiredFields = [];
 
     for (const [key, values] of Object.entries(object)) {
         if (values.length > 0) {
             if (key === "select") {
                 for (let value of values) {
                     if (isOptionSelected(value) === false) {
-                        unansweredRequiredInputs.push(value);
+                        unansweredRequiredFields.push(value);
                     }
                 }                
             } else if (key === "radio") {
                 for (let value of values) {
                     if (isRadioClicked(value) === false) {
-                        unansweredRequiredInputs.push(value);
+                        unansweredRequiredFields.push(value);
                     }
                 }
             } else if (key === "checkbox") {
                 for (let value of values) {
                     if (isCheckboxChecked(value) === false) {
-                        unansweredRequiredInputs.push(value);
+                        unansweredRequiredFields.push(value);
                     }
                 }
             } else if (key === "text") {
                 for (let value of values) {
                     if (isTextInputFilled(value) === false) {
-                        unansweredRequiredInputs.push(value);
+                        unansweredRequiredFields.push(value);
                     }
                 }
             } else if (key === "textarea") {
                 for (let value of values) {
                     if (isTextareaFilled(value) === false) {
-                        unansweredRequiredInputs.push(value);
+                        unansweredRequiredFields.push(value);
                     }
                 }
             }
         }
     };
-    return unansweredRequiredInputs;
+    console.log(unansweredRequiredFields);
+    return unansweredRequiredFields;
 }
 
 
