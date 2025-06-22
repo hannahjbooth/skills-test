@@ -869,6 +869,10 @@
         padding-top: 15px;
     }
 
+    #feedback fieldset {
+        margin-inline: 0;
+    }
+
     .feedback-intro {
         margin-left: 20%;
         margin-right: 20%;
@@ -878,6 +882,11 @@
     .buttons {
         display: flex;
         justify-content: center;
+        padding: 7px 0 8px 0;
+    }
+
+    .buttons input {
+        margin: 0 3px;
     }
     
     .question fieldset {
