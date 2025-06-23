@@ -204,7 +204,7 @@ const formSteps = Array.from(document.getElementsByClassName("step"));
 const firstStep = formSteps[0];
 const lastStep = formSteps[formSteps.length - 1];
 
-let currentRequiredElements = returnArrayOfCurrentlyRequiredElements();
+let currentRequiredElements = returnArrayOfCurrentRequiredElements();
 
 let currentStep = getCurrentStep(formSteps);
 
@@ -262,14 +262,6 @@ function isCheckboxChecked(value) {
     return false;
 }
 
-function isAnyCheckboxChecked(checkboxArray) {
-    for (checkbox of checkboxArray) {
-        if (checkbox.checked) {
-            return true;
-        }
-    }
-    return false;  
-}
 
 function isOptionSelected(value) {
     if (value.value !== "") {
@@ -293,40 +285,14 @@ function isTextareaFilled(value) {
 }
 
 
-// Functions
 
-function handleCheckboxQuestionValidation() {
-    allCheckboxesArray.forEach(checkbox => {
-        checkbox.addEventListener("change", function () {
-            const associatedCheckboxes = returnArrayOfAllAssociatedCheckboxes(checkbox);
-            handleCheckboxRequiredAttributes(checkbox, associatedCheckboxes);
-        });
-    });
-}
-
-function handleCheckboxRequiredAttributes(checkbox, associatedCheckboxes) {
-    if (checkbox.checked) {
-        associatedCheckboxes.forEach(checkbox => checkbox.required = false);                    
-    } else if (!isAnyCheckboxChecked(associatedCheckboxes)) {
-        associatedCheckboxes.forEach(checkbox => checkbox.required = true);                                   
-    }
-}
-
-handleCheckboxQuestionValidation();
-
-
-
-
-
-function handleRequiredAttributeOnTextInput(checkbox) {
-    if (checkbox.checked) {
+function handleRequiredAttributeOnTextInput(otherCheckboxcheckbox) {
+    if (otherCheckbox.checked) {
         otherTextInput.required = true;
     } else {
         otherTextInput.required = false;
     }
 }
-
-
 
 
 
@@ -396,7 +362,7 @@ otherCheckbox.addEventListener("change", function() {
     
 next.addEventListener("click", function(event) {
 
-    let currentRequiredElements = returnArrayOfCurrentlyRequiredElements();
+    let currentRequiredElements = returnArrayOfCurrentRequiredElements();
 
     let currentStepIndex = getCurrentStepIndex(formSteps, currentStep);
     let nextStep = formSteps[currentStepIndex + 1];
@@ -432,13 +398,13 @@ back.addEventListener("click", function(event) {
 // 'Required' message display functions
 
 function handleRequiredMessages(currentRequiredElements) {
-    let unansweredRequiredFields = returnArrayOfUnansweredRequiredFields(currentRequiredElements);
-    displayRequiredMessage(unansweredRequiredFields);
+    let unansweredRequiredElements = returnArrayOfUnansweredRequiredElements(currentRequiredElements);
+    displayRequiredMessage(unansweredRequiredElements);
 }
 
-function displayRequiredMessage(unansweredRequiredFields) {
+function displayRequiredMessage(unansweredRequiredElements) {
 
-    for (let field of unansweredRequiredFields) {
+    for (let field of unansweredRequiredElements) {
         let questionContainer = field.closest(".question");
         let requiredMessage = questionContainer.querySelector(".required-message");
         requiredMessage.classList.remove("hidden");
@@ -451,15 +417,13 @@ function hideAllRequiredMessages() {
     for (let message of allRequiredMessages) {
         message.classList.add("hidden");
     }
-}
-    
+} 
 
-function returnArrayOfCurrentlyRequiredElements() {
+function returnArrayOfCurrentRequiredElements() {
     let currentStep = getCurrentStep(formSteps);
     let currentRequiredElements = Array.from(currentStep.querySelectorAll("[required]"));
     return currentRequiredElements;
 }
-
    
 function returnRequiredElementsByType(currentRequiredElements) {
     let requiredElementsGroupedByType = {
@@ -488,53 +452,49 @@ function returnRequiredElementsByType(currentRequiredElements) {
     return requiredElementsGroupedByType;
 }
 
-
-
-function returnArrayOfUnansweredRequiredFields(currentRequiredElements) {
+function returnArrayOfUnansweredRequiredElements(currentRequiredElements) {
     let object = returnRequiredElementsByType(currentRequiredElements);
     
-    let unansweredRequiredFields = [];
+    let unansweredRequiredElements = [];
 
     for (const [key, values] of Object.entries(object)) {
         if (values.length > 0) {
             if (key === "select") {
                 for (let value of values) {
                     if (isOptionSelected(value) === false) {
-                        unansweredRequiredFields.push(value);
+                        unansweredRequiredElements.push(value);
                     }
                 }                
             } else if (key === "radio") {
                 for (let value of values) {
                     if (isRadioClicked(value) === false) {
-                        unansweredRequiredFields.push(value);
+                        unansweredRequiredElements.push(value);
                     }
                 }
             } else if (key === "checkbox") {
                 for (let value of values) {
                     if (isCheckboxChecked(value) === false) {
-                        unansweredRequiredFields.push(value);
+                        unansweredRequiredElements.push(value);
                     }
                 }
             } else if (key === "text") {
                 for (let value of values) {
                     if (isTextInputFilled(value) === false) {
-                        unansweredRequiredFields.push(value);
+                        unansweredRequiredElements.push(value);
                     }
                 }
             } else if (key === "textarea") {
                 for (let value of values) {
                     if (isTextareaFilled(value) === false) {
-                        unansweredRequiredFields.push(value);
+                        unansweredRequiredElements.push(value);
                     }
                 }
             }
         }
     };
-    console.log(unansweredRequiredFields);
-    return unansweredRequiredFields;
+    console.log(unansweredRequiredElements);
+    return unansweredRequiredElements;
 }
-
-
 
 function returnArrayOfAllAssociatedRadios(value) {      
     let valueQuestion = value.closest('.question');
@@ -549,3 +509,31 @@ function returnArrayOfAllAssociatedCheckboxes(value) {
 }
 
 
+
+// function handleCheckboxQuestionValidation() {
+//     allCheckboxesArray.forEach(checkbox => {
+//         checkbox.addEventListener("change", function () {
+//             const associatedCheckboxes = returnArrayOfAllAssociatedCheckboxes(checkbox);
+//             handleCheckboxRequiredAttributes(checkbox, associatedCheckboxes);
+//         });
+//     });
+// }
+
+// function handleCheckboxRequiredAttributes(checkbox, associatedCheckboxes) {
+//     if (checkbox.checked) {
+//         associatedCheckboxes.forEach(checkbox => checkbox.required = false);                    
+//     } else if (!isAnyCheckboxChecked(associatedCheckboxes)) {
+//         associatedCheckboxes.forEach(checkbox => checkbox.required = true);                                   
+//     }
+// }
+
+// handleCheckboxQuestionValidation();
+
+// function isAnyCheckboxChecked(checkboxArray) {
+//     for (checkbox of checkboxArray) {
+//         if (checkbox.checked) {
+//             return true;
+//         }
+//     }
+//     return false;  
+// }
