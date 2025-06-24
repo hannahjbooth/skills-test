@@ -163,36 +163,38 @@
                                     <option value="18 + years">18 + years</option>
                                 </select>
                             </div>
-                            <fieldset data-question="5" class="question">
-                            <legend class="sr-only">Is the user able to put on their own shoes?</legend>
-
-                            <div class="radio-options">
-                                <label>
-                                    <input id="q5-a1" type="radio" name="q5_can_user_put_on_shoes" value="Yes - velcro only" required>
-                                    Yes – velcro only
-                                </label>
-
-                                <label>
-                                    <input id="q5-a2" type="radio" name="q5_can_user_put_on_shoes" value="Yes - laced or velcro">
-                                    Yes – laced or velcro
-                                </label>
-
-                                <label>
-                                    <input id="q5-a3" type="radio" name="q5_can_user_put_on_shoes" value="No">
-                                    No
-                                </label>
+                            <div data-question="5" class="question">
+                                <p class="required-message hidden">Required</p>
+                                <p>Is the user able to put on their own shoes?</p>
+                                <div class="radio-options">
+                                    <label>
+                                        <input id="q5-a1" type="radio" name="q5_can_user_put_on_shoes" value="Yes - velcro only" required>
+                                        Yes – velcro only
+                                    </label>
+                                    <label>
+                                        <input id="q5-a2" type="radio" name="q5_can_user_put_on_shoes" value="Yes - laced or velcro">
+                                        Yes – laced or velcro
+                                    </label>
+                                    <label>
+                                        <input id="q5-a3" type="radio" name="q5_can_user_put_on_shoes" value="No">
+                                        No
+                                    </label>
+                                </div>
                             </div>
-                            </fieldset>
                             <div data-question="6" class="question">
                                 <p>If you answered yes to the previous question, was the user able to put the splint on without assistance?</p>                                            
                                 <div class="radio-options">
                                     <div class="pair">
-                                        <label for="q6-a1">Yes</label>                                           
-                                        <input id="q6-a1" type="radio" name="q6_if_previous_is_yes_can_user_put_on_splint_without_assistance" value="Yes">
+                                        <label>
+                                            <input id="q6-a1" type="radio" name="q6_if_previous_is_yes_can_user_put_on_splint_without_assistance" value="Yes">                                            
+                                            Yes
+                                        </label>                                           
                                     </div>   
                                     <div class="pair">
-                                        <label for="q6-a2">No</label> 
-                                        <input id="q6-a2" type="radio" name="q6_if_previous_is_yes_can_user_put_on_splint_without_assistance" value="No">
+                                        <label for="q6-a2">
+                                            <input id="q6-a2" type="radio" name="q6_if_previous_is_yes_can_user_put_on_splint_without_assistance" value="No">
+                                            No
+                                        </label> 
                                     </div>
                                 </div>   
                             </div>
