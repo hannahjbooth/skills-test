@@ -970,8 +970,13 @@
         grid-column: 2;
     }
 
-    #discomfort-other-text {
-        grid-column: 2;
+    #feedback .other label {
+        display: flex;
+    }
+
+    #q8-a7-text {
+        flex: 1;
+        margin: 0 0 0 5px;
     }
 
 
