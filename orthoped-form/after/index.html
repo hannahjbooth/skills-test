@@ -164,22 +164,24 @@
                                 </select>
                             </div>
                             <fieldset data-question="5" class="question">
-                                <p class="required-message hidden">Required</p>                                            
-                                <legend>Is the user able to put on their own shoes? <span aria-hidden="true">*</span></legend>
-                                <div class="radio-options">
-                                    <div class="pair">
-                                        <label for="q5-a1">Yes - velcro only</label>
-                                        <input id="q5-a1" type="radio" name="q5_can_user_put_on_their_own_shoes" value="Yes - velcro only" required>
-                                    </div>
-                                    <div class="pair">
-                                        <label for="q5-a2">Yes - laced or velcro</label>
-                                        <input id="q5-a2" type="radio" name="q5_can_user_put_on_their_own_shoes" value="Yes - laced or velcro">
-                                    </div>
-                                    <div class="pair">
-                                        <label for="q5-a3">No</label>                                            
-                                        <input id="q5-a3" type="radio" name="q5_can_user_put_on_their_own_shoes" value="No">
-                                    </div>
-                                </div>
+                            <legend class="sr-only">Is the user able to put on their own shoes?</legend>
+
+                            <div class="radio-options">
+                                <label>
+                                    <input id="q5-a1" type="radio" name="q5_can_user_put_on_shoes" value="Yes - velcro only" required>
+                                    Yes – velcro only
+                                </label>
+
+                                <label>
+                                    <input id="q5-a2" type="radio" name="q5_can_user_put_on_shoes" value="Yes - laced or velcro">
+                                    Yes – laced or velcro
+                                </label>
+
+                                <label>
+                                    <input id="q5-a3" type="radio" name="q5_can_user_put_on_shoes" value="No">
+                                    No
+                                </label>
+                            </div>
                             </fieldset>
                             <div data-question="6" class="question">
                                 <p>If you answered yes to the previous question, was the user able to put the splint on without assistance?</p>                                            
