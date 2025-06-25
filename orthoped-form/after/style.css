@@ -935,6 +935,7 @@
     box-shadow: 2px 2px 8px 0px #7b7b7b4e;   
 }
 
+
 .required-message {
     text-align: right;
     margin: 0;
@@ -962,6 +963,12 @@ select {
     flex: 1;
     margin: 0 0 0 5px;
 }
+
+.question p {
+    margin-top: 0;
+}
+
+
 
 /* Footer */
 
