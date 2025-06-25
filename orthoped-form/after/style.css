@@ -863,6 +863,16 @@
 
 /* Feedback Form */
 
+.feedback-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#feedback {
+    width: 80%;
+}
+
 .feedback-main .page-h1-container {
     padding-top: 15px;
 }
@@ -901,7 +911,7 @@
     border-width: 1px;
     margin-top: 20px;
     margin-bottom: 20px;
-    padding: 20px;
+    padding: 10px 30px 35px 30px;
 }
 
 .contact-us-intro {
@@ -929,12 +939,14 @@
     background-color: #776b6b17;
     border-width: 1px;
     border-color: #30303073;
-    padding-left: 20px;
     margin: 20px;
     border-radius: 10px;
     box-shadow: 2px 2px 8px 0px #7b7b7b4e;   
 }
 
+.required-message-container, .no-required-message-container {
+    height: 25px;
+}
 
 .required-message {
     text-align: right;
@@ -955,8 +967,9 @@
     margin: 2px 0;
 }
 
-select {
+select, #feedback textarea {
     width: 100%;
+    margin-top: 10px;
 }
 
 #q8-a7-text {
@@ -967,7 +980,6 @@ select {
 .question p {
     margin-top: 0;
 }
-
 
 
 /* Footer */
