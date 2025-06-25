@@ -189,6 +189,8 @@ for (let question of questions) {
 
 // Variables and constants
 
+const main = document.querySelector("main");
+
 let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
 let allCheckboxesArray = Array.from(allCheckboxes);
 
@@ -402,6 +404,10 @@ function displayPreviousStep(currentStep, previousStep) {
     previousStep.classList.remove("hidden");
 }
 
+function scrollToTop(main) {
+    main.scrollIntoView({behavior: 'smooth'});
+}
+
 // 'Required' message display functions
 
 function handleRequiredMessages(currentRequiredElements) {
@@ -488,6 +494,7 @@ next.addEventListener("click", function(event) {
             displayNextStep(currentStep, nextStep);
             currentStep = nextStep;
             handleButtonsDisplay(currentStep, formButtons);
+            scrollToTop(main);
         }
     }
 });
@@ -502,9 +509,8 @@ back.addEventListener("click", function(event) {
         displayPreviousStep(currentStep, previousStep);
         currentStep = previousStep;
         handleButtonsDisplay(currentStep, formButtons);
+        scrollToTop(main);
     }
 });
-
-
 
 
