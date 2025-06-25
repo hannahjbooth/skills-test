@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+h1, h2 {
+    text-align: center;
+    font-weight: 300;
+}
+
+.form-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    
+}
+
+a {
+    text-align: center;
+    background-color:  #f1f0f0c5;
+    border-radius: 20px;
+    padding: 5px;
+    width: 45%;
+}
+
+.form-results {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#before, #after {
+    width: 45%;
+    background-color:  #f1f0f0c5;
+    border-radius: 20px;
+    padding: 5px;
+} 
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.row div {
+    width: 45%;
+}
+
+.question, .answer {
+    margin: 10px 20px;
+}
+
+p {
+    margin: 0;
+}
+
+.question {
+    font-weight: 600;
+}
