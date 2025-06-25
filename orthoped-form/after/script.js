@@ -292,6 +292,8 @@ function returnArrayOfCurrentRequiredElements() {
     let currentRequiredElements = Array.from(currentStep.querySelectorAll("[required]"));
     return currentRequiredElements;
 }
+
+    // Object based functions
    
 function returnRequiredElementsByType(currentRequiredElements) {
     let requiredElementsGroupedByType = {
