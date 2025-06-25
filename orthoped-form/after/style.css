@@ -2238,7 +2238,7 @@ select {
         /* Feedback */
     
         .feedback-main h1 {
-            margin: 15px 0px 10px 0px;
+            margin: 35px 0px 0px 0px;
         }
     
         .feedback-content {
@@ -2732,6 +2732,10 @@ select {
 
         #home-header {
             top: 137px;
+        }
+
+        .feedback-main h1 {
+            margin: 15px 0px 0px 0px;
         }
 
         .home-content {
