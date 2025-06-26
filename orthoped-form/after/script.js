@@ -254,117 +254,7 @@ function isTextareaFilled(value) {
     return false;
 }
 
-function isRequiredQuestionUnanswered(currentRequiredElements) {
-    let object = returnRequiredElementsByType(currentRequiredElements);
-    
-    for (const [key, values] of Object.entries(object)) {
-        if (values.length > 0) {
-            if (key === "select") {
-                for (let value of values) {
-                    if (isOptionSelected(value) === false) return true;
-                }                
-            } else if (key === "radio") {
-                for (let value of values) {
-                    if (isRadioChecked(value) === false) return true;
-                }
-            } else if (key === "checkbox") {
-                for (let value of values) {
-                    if (isCheckboxChecked(value) === false) return true;
-                }
-            } else if (key === "text") {
-                for (let value of values) {
-                    if (isTextInputFilled(value) === false) return true;
-                }
-            } else if (key === "textarea") {
-                for (let value of values) {
-                    if (isTextareaFilled(value) === false) return true;
-                }
-            }
-        }
-    }
-    return false;
-}
-
-// Functions returning elements
-
-function returnArrayOfCurrentRequiredElements() {
-    let currentStep = getCurrentStep(formSteps);
-    let currentRequiredElements = Array.from(currentStep.querySelectorAll("[required]"));
-    return currentRequiredElements;
-}
-
-    // Object based functions
-   
-function returnRequiredElementsByType(currentRequiredElements) {
-    let requiredElementsGroupedByType = {
-        select: [],
-        radio: [],
-        checkbox: [],
-        text: [],
-        textarea: []
-    }; 
-    
-    currentRequiredElements.forEach(element => {
-        if (element.tagName === "INPUT") {
-            if (element.type === "radio") {
-                requiredElementsGroupedByType.radio.push(element);                    
-            } else if (element.type === "checkbox") {
-                requiredElementsGroupedByType.checkbox.push(element);
-            } else if (element.type === "text") {
-                requiredElementsGroupedByType.text.push(element);
-            }
-        } else if (element.tagName === "SELECT") {
-            requiredElementsGroupedByType.select.push(element);
-        } else if (element.tagName === "TEXTAREA") {
-            requiredElementsGroupedByType.textarea.push(element);
-        }
-    });
-    return requiredElementsGroupedByType;
-}
-
-function returnArrayOfUnansweredRequiredElements(currentRequiredElements) {
-    let object = returnRequiredElementsByType(currentRequiredElements);
-    
-    let unansweredRequiredElements = [];
-
-    for (const [key, values] of Object.entries(object)) {
-        if (values.length > 0) {
-            if (key === "select") {
-                for (let value of values) {
-                    if (isOptionSelected(value) === false) {
-                        unansweredRequiredElements.push(value);
-                    }
-                }                
-            } else if (key === "radio") {
-                for (let value of values) {
-                    if (isRadioChecked(value) === false) {
-                        unansweredRequiredElements.push(value);
-                    }
-                }
-            } else if (key === "checkbox") {
-                for (let value of values) {
-                    if (isCheckboxChecked(value) === false) {
-                        unansweredRequiredElements.push(value);
-                    }
-                }
-            } else if (key === "text") {
-                for (let value of values) {
-                    if (isTextInputFilled(value) === false) {
-                        unansweredRequiredElements.push(value);
-                    }
-                }
-            } else if (key === "textarea") {
-                for (let value of values) {
-                    if (isTextareaFilled(value) === false) {
-                        unansweredRequiredElements.push(value);
-                    }
-                }
-            }
-        }
-    };
-    console.log(unansweredRequiredElements);
-    return unansweredRequiredElements;
-}
+// Function returning associated inputs
 
 function returnArrayOfAllAssociatedRadios(value) {      
     let valueQuestion = value.closest('.question');
@@ -410,12 +300,7 @@ function scrollToTop(main) {
     main.scrollIntoView({behavior: 'smooth'});
 }
 
-// 'Required' message display functions
-
-function handleRequiredMessages(currentRequiredElements) {
-    let unansweredRequiredElements = returnArrayOfUnansweredRequiredElements(currentRequiredElements);
-    displayRequiredMessage(unansweredRequiredElements);
-}
+// 'Required' message display function
 
 function displayRequiredMessage(unansweredRequiredElements) {
 
@@ -425,14 +310,6 @@ function displayRequiredMessage(unansweredRequiredElements) {
         requiredMessage.classList.remove("hidden");
     }
 }
-
-function hideAllRequiredMessages() {
-    let allRequiredMessages = Array.from(document.querySelectorAll(".required-message"));
-
-    for (let message of allRequiredMessages) {
-        message.classList.add("hidden");
-    }
-} 
 
 // Button display functions
 
@@ -460,7 +337,6 @@ function handleButtonsDisplay(currentStep, formButtons) {
     }
 }
 
-
 // Custom validation
 
 function toggleRequiredAttributeOnTextInput(checkbox, textInput) {
@@ -471,7 +347,7 @@ function toggleRequiredAttributeOnTextInput(checkbox, textInput) {
     }
 }
 
-// Initial function calls & Event Listeners
+// Event Listeners & Validation Process
 
 handleButtonsDisplay(currentStep, formButtons);
 
@@ -516,3 +392,123 @@ back.addEventListener("click", function(event) {
 });
 
 
+function returnArrayOfCurrentRequiredElements() {
+    let currentStep = getCurrentStep(formSteps);
+    let currentRequiredElements = Array.from(currentStep.querySelectorAll("[required]"));
+    return currentRequiredElements;
+}
+
+function hideAllRequiredMessages() {
+    let allRequiredMessages = Array.from(document.querySelectorAll(".required-message"));
+
+    for (let message of allRequiredMessages) {
+        message.classList.add("hidden");
+    }
+} 
+
+function isRequiredQuestionUnanswered(currentRequiredElements) {
+    let object = returnRequiredElementsByType(currentRequiredElements);
+    
+    for (const [key, values] of Object.entries(object)) {
+        if (values.length > 0) {
+            if (key === "select") {
+                for (let value of values) {
+                    if (isOptionSelected(value) === false) return true;
+                }                
+            } else if (key === "radio") {
+                for (let value of values) {
+                    if (isRadioChecked(value) === false) return true;
+                }
+            } else if (key === "checkbox") {
+                for (let value of values) {
+                    if (isCheckboxChecked(value) === false) return true;
+                }
+            } else if (key === "text") {
+                for (let value of values) {
+                    if (isTextInputFilled(value) === false) return true;
+                }
+            } else if (key === "textarea") {
+                for (let value of values) {
+                    if (isTextareaFilled(value) === false) return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function returnRequiredElementsByType(currentRequiredElements) {
+    let requiredElementsGroupedByType = {
+        select: [],
+        radio: [],
+        checkbox: [],
+        text: [],
+        textarea: []
+    }; 
+    
+    currentRequiredElements.forEach(element => {
+        if (element.tagName === "INPUT") {
+            if (element.type === "radio") {
+                requiredElementsGroupedByType.radio.push(element);                    
+            } else if (element.type === "checkbox") {
+                requiredElementsGroupedByType.checkbox.push(element);
+            } else if (element.type === "text") {
+                requiredElementsGroupedByType.text.push(element);
+            }
+        } else if (element.tagName === "SELECT") {
+            requiredElementsGroupedByType.select.push(element);
+        } else if (element.tagName === "TEXTAREA") {
+            requiredElementsGroupedByType.textarea.push(element);
+        }
+    });
+    return requiredElementsGroupedByType;
+}
+
+function handleRequiredMessages(currentRequiredElements) {
+    let unansweredRequiredElements = returnArrayOfUnansweredRequiredElements(currentRequiredElements);
+    displayRequiredMessage(unansweredRequiredElements);
+}
+
+function returnArrayOfUnansweredRequiredElements(currentRequiredElements) {
+    let object = returnRequiredElementsByType(currentRequiredElements);
+    
+    let unansweredRequiredElements = [];
+
+    for (const [key, values] of Object.entries(object)) {
+        if (values.length > 0) {
+            if (key === "select") {
+                for (let value of values) {
+                    if (isOptionSelected(value) === false) {
+                        unansweredRequiredElements.push(value);
+                    }
+                }                
+            } else if (key === "radio") {
+                for (let value of values) {
+                    if (isRadioChecked(value) === false) {
+                        unansweredRequiredElements.push(value);
+                    }
+                }
+            } else if (key === "checkbox") {
+                for (let value of values) {
+                    if (isCheckboxChecked(value) === false) {
+                        unansweredRequiredElements.push(value);
+                    }
+                }
+            } else if (key === "text") {
+                for (let value of values) {
+                    if (isTextInputFilled(value) === false) {
+                        unansweredRequiredElements.push(value);
+                    }
+                }
+            } else if (key === "textarea") {
+                for (let value of values) {
+                    if (isTextareaFilled(value) === false) {
+                        unansweredRequiredElements.push(value);
+                    }
+                }
+            }
+        }
+    };
+    console.log(unansweredRequiredElements);
+    return unansweredRequiredElements;
+}
