@@ -12,25 +12,25 @@ const requiredFields = [ ...inputs, textarea];
 form.addEventListener('submit', (event) => {
     event.preventDefault();
     for (const field of requiredFields) {
-        if (!fieldsAreCorrectlyFilled(field)) {
-            activateErrorMessage(field);
+        if (!fieldIsCorrectlyFilled(field)) {
+            activateRequiredMessage(field);
         } else {
-            deactivateErrorMessage(field);
+            deactivateRequiredMessage(field);
             activateSubmissionMessage();
         }
     }
 });
 
-function showErrorMessage(field) {
+function showRequiredMessage(field) {
     field.setCustomValidity('This value is missing');
 }
 
-function returnsFieldErrorSpan(field) {
-    return document.getElementById(`${field.id}-error`);
+function returnsFieldRequiredSpan(field) {
+    return document.getElementById(`${field.id}-required`);
 }
 
-function activateErrorMessage(field) {
-    returnsFieldErrorSpan(field).textContent = 'Required';
+function activateRequiredMessage(field) {
+    returnsFieldRequiredSpan(field).textContent = 'Required';
 }
 
 function returnsSubmissionMessageSpan() {
@@ -41,13 +41,13 @@ function activateSubmissionMessage() {
     returnsSubmissionMessageSpan().textContent = 'Your form has been submitted'
 }
 
-function deactivateErrorMessage(field) {
+function deactivateRequiredMessage(field) {
     if (field.value) {
-        returnsFieldErrorSpan(field).textContent = '';
+        returnsFieldRequiredSpan(field).textContent = '';
     }
 }
 
-function fieldsAreCorrectlyFilled(field) {
+function fieldIsCorrectlyFilled(field) {
     if (field.validity.valid) {
         if (textFieldHasLetters(field)) {
             return true;

@@ -21,27 +21,27 @@
             <li>Some basic JavaScript</li>
         </ul>
         <form method="post" novalidate>
-            <p class="required-message" aria-hidden="true">* Required information</p>
+            <p class="required-instruction" aria-hidden="true">* Required information</p>
             <br>
             <div>
                 <label for="name">Name <span aria-hidden="true">*</span></label>
                 <input type="text" id="name" name="Name" required>
                 <div class="reserved">
-                    <p id="name-error" class="error-message"></p>       
+                    <p id="name-required" class="required-message"></p>       
                 </div>
             </div>
             <div>
                 <label for="surname">Surname <span aria-hidden="true">*</span></label>
                 <input type="text" id="surname" name="Surname" required>
                 <div class="reserved">
-                    <p id="surname-error" class="error-message"></p>       
+                    <p id="surname-required" class="required-message"></p>       
                 </div>                       
             </div>
             <div>
                 <label for="dob">Date of Birth <span aria-hidden="true">*</span></label>
                 <input type="date" id="dob" required>
                 <div class="reserved">
-                    <p id="dob-error" class="error-message"></p>       
+                    <p id="dob-required" class="required-message"></p>       
                 </div>
             </div>
             <div>
@@ -50,7 +50,7 @@
                     <textarea name="Symptoms" id="symptoms" rows="4" required></textarea>             
                 </div>
                 <div class="reserved">
-                    <p id="symptoms-error" class="error-message"></p>       
+                    <p id="symptoms-required" class="required-message"></p>       
                 </div>   
             </div>
             <input type="submit" id="submit" name="Submit">

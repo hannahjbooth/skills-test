@@ -35,12 +35,12 @@ p {
     color: green;
 }
 
-.error-message {
+.required-message {
     align-content: center;
     color: red;
 }
 
-.required-message {
+.required-instruction {
     padding-bottom: 30px;
 }
 
