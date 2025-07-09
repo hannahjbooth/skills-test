@@ -16,23 +16,26 @@
             Confirm Email
             Submit 
         -->
-        <div>
-            <label for="name">Name:</label>
-            <input id="name" type="text">
-        </div>
-        <div>
-            <label for="surname">Surname:</label>
-            <input id="surname" type="text">            
-        </div>
-        <div>
-            <label for="email">Email:</label>
-            <input id="email" type="email">            
-        </div>
-        <div>
-            <label for="confirm-email">Confirm Email:</label>
-            <input id="confirm-email" type="email">            
-        </div>        
-        <input type="submit">
+        <fieldset>
+            <legend>Name & Email</legend>
+            <div data-field="1">
+                <label for="name">Name:</label>
+                <input id="name" type="text" required>
+            </div>
+            <div data-field="2">
+                <label for="surname">Surname:</label>
+                <input id="surname" type="text" required>            
+            </div>
+            <div data-field="3">
+                <label for="email">Email:</label>
+                <input id="email" type="email" required>            
+            </div>
+            <div data-field="4">
+                <label for="confirm-email">Confirm Email:</label>
+                <input id="confirm-email" type="email" required>            
+            </div>        
+            <input type="submit" id="submit">                
+        </fieldset>
     </form>
 </body>
 </html>
