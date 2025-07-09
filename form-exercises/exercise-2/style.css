@@ -10,10 +10,32 @@ form, fieldset {
     width: 80%;
 }
 
+[data-field] div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2px 0;
+}
+
 #submit {
     width: fit-content;
     align-self: center;
     margin: 5px;
+}
+
+.required-instruction {
+    margin: 5px;
+}
+
+.required-message {
+    align-content: right;
+    color: red;
+    margin: 0;
+}
+
+.submission-message {
+    height: 20px;
+    color: green;
 }
 
 @media (max-width: 400px) {
