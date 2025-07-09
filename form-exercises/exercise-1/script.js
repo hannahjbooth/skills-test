@@ -11,19 +11,35 @@ const requiredFields = [ ...inputs, textarea];
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
+    handleRequiredMessage(requiredFields);
+    handleSubmissionMessage(requiredFields);
+});
+
+function handleRequiredMessage(requiredFields) {
     for (const field of requiredFields) {
         if (!fieldIsCorrectlyFilled(field)) {
             activateRequiredMessage(field);
         } else {
             deactivateRequiredMessage(field);
-            activateSubmissionMessage();
         }
     }
-});
-
-function showRequiredMessage(field) {
-    field.setCustomValidity('This value is missing');
 }
+
+function handleSubmissionMessage(requiredFields) {
+    let allFilled = true;
+
+    for (const field of requiredFields) {
+        if (!fieldIsCorrectlyFilled(field)) {
+            allFilled = false;
+            return;
+        }
+    }
+
+    if (allFilled === true) {
+        activateSubmissionMessage();
+    }
+}
+
 
 function returnsFieldRequiredSpan(field) {
     return document.getElementById(`${field.id}-required`);
