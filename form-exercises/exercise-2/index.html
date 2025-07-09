@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Exercise 2</h1>
-    <form action="post" novalidate>
+    <form method="post" novalidate>
         <!--
             Name
             Surname
@@ -18,24 +18,26 @@
         -->
         <fieldset>
             <legend>Name & Email</legend>
+            <p class="required-instruction" aria-hidden="true">* Required information</p>
             <div data-field="1">
-                <label for="name">Name:</label>
+                <label for="name">Name: <span aria-hidden="true">*</span><span id="name-required" class="required-message"></span></label>
                 <input id="name" type="text" required>
             </div>
             <div data-field="2">
-                <label for="surname">Surname:</label>
+                <label for="surname">Surname: <span aria-hidden="true">*</span><span id="surname-required" class="required-message"></span></label>
                 <input id="surname" type="text" required>            
             </div>
             <div data-field="3">
-                <label for="email">Email:</label>
+                <label for="email">Email: <span aria-hidden="true">*</span><span id="email-required" class="required-message"></span></label>
                 <input id="email" type="email" required>            
             </div>
             <div data-field="4">
-                <label for="confirm-email">Confirm Email:</label>
+                <label for="confirm-email">Confirm Email: <span aria-hidden="true">*</span><span id="confirm-email-required" class="required-message"></span></label>
                 <input id="confirm-email" type="email" required>            
             </div>        
-            <input type="submit" id="submit">                
+            <input type="submit" id="submit" name="Submit">                
         </fieldset>
     </form>
+    <script src="/form-exercises/script.js"></script>
 </body>
 </html>
