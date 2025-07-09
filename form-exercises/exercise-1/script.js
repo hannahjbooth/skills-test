@@ -1,13 +1,5 @@
-const dobInput = document.getElementById("dob");
 const form = document.querySelector("form");
-const submit = document.getElementById('submit');
-const nameInput = document.getElementById('name');
-const surnameInput = document.getElementById("surname");
-const textarea = document.querySelector('textarea');
-
-const inputs = Array.from(document.querySelectorAll('input'));
-const inputsWithoutSubmit = inputs.pop();
-const requiredFields = [ ...inputs, textarea];
+const requiredFields = Array.from(document.querySelectorAll('[required]'));
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -55,12 +47,12 @@ function handleSubmissionMessage(requiredFields) {
 }
 
 
-function returnsFieldRequiredSpan(field) {
+function returnsFieldRequiredMessage(field) {
     return document.getElementById(`${field.id}-required`);
 }
 
 function activateRequiredMessage(field) {
-    returnsFieldRequiredSpan(field).textContent = 'Required';
+    returnsFieldRequiredMessage(field).textContent = 'Required';
 }
 
 function returnsSubmissionMessageSpan() {
@@ -73,7 +65,7 @@ function activateSubmissionMessage() {
 
 function deactivateRequiredMessage(field) {
     if (field.value) {
-        returnsFieldRequiredSpan(field).textContent = '';
+        returnsFieldRequiredMessage(field).textContent = '';
     }
 }
 
