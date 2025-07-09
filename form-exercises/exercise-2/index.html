@@ -9,33 +9,41 @@
 <body>
     <h1>Exercise 2</h1>
     <form method="post" novalidate>
-        <!--
-            Name
-            Surname
-            Email
-            Confirm Email
-            Submit 
-        -->
         <fieldset>
             <legend>Name & Email</legend>
             <p class="required-instruction" aria-hidden="true">* Required information</p>
             <div data-field="1">
-                <label for="name">Name: <span aria-hidden="true">*</span><span id="name-required" class="required-message"></span></label>
+                <div>
+                    <label for="name">Name: <span aria-hidden="true">*</span></label>
+                    <p id="name-required" class="required-message"></p>
+                </div>
                 <input id="name" type="text" required>
             </div>
             <div data-field="2">
-                <label for="surname">Surname: <span aria-hidden="true">*</span><span id="surname-required" class="required-message"></span></label>
+                <div>
+                    <label for="surname">Surname: <span aria-hidden="true">*</span></label>
+                    <p id="surname-required" class="required-message"></p>                    
+                </div>
                 <input id="surname" type="text" required>            
             </div>
             <div data-field="3">
-                <label for="email">Email: <span aria-hidden="true">*</span><span id="email-required" class="required-message"></span></label>
+                <div>
+                    <label for="email">Email: <span aria-hidden="true">*</span></label>
+                    <p id="email-required" class="required-message"></p>
+                </div>
                 <input id="email" type="email" required>            
             </div>
             <div data-field="4">
-                <label for="confirm-email">Confirm Email: <span aria-hidden="true">*</span><span id="confirm-email-required" class="required-message"></span></label>
+                <div>
+                    <label for="confirm-email">Confirm Email: <span aria-hidden="true">*</span></label>
+                    <p id="confirm-email-required" class="required-message"></p>
+                </div>
                 <input id="confirm-email" type="email" required>            
             </div>        
-            <input type="submit" id="submit" name="Submit">                
+            <input type="submit" id="submit" name="Submit">
+            <div class="submission-message">
+                <p id="submission-message"></p>
+            </div>
         </fieldset>
     </form>
     <script src="/form-exercises/script.js"></script>
