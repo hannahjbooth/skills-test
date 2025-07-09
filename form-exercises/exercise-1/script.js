@@ -11,9 +11,14 @@ const requiredFields = [ ...inputs, textarea];
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
-    handleRequiredMessage(requiredFields);
+    handleUnansweredQuestions(requiredFields);
     handleSubmissionMessage(requiredFields);
 });
+
+function handleUnansweredQuestions(requiredFields) {
+    handleRequiredMessage(requiredFields);
+    focusFirstUnansweredQuestion(requiredFields);
+}
 
 function handleRequiredMessage(requiredFields) {
     for (const field of requiredFields) {
@@ -21,6 +26,15 @@ function handleRequiredMessage(requiredFields) {
             activateRequiredMessage(field);
         } else {
             deactivateRequiredMessage(field);
+        }
+    }
+}
+
+function focusFirstUnansweredQuestion(requiredFields) {
+    for (const field of requiredFields) {
+        if (!fieldIsCorrectlyFilled(field)) {
+            field.focus();
+            return;
         }
     }
 }
