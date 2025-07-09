@@ -1,0 +1,28 @@
+form, fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+[data-field] {
+    display: flex;
+    width: 80%;
+}
+
+#submit {
+    width: fit-content;
+    align-self: center;
+    margin: 5px;
+}
+
+@media (max-width: 400px) {
+    fieldset {
+        width: 85%;
+    }
+
+    [data-field] {
+        flex-direction: column;
+        padding: 5px;
+    }
+}
