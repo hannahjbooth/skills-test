@@ -3,6 +3,9 @@ const requiredFields = Array.from(document.querySelectorAll('[required]'));
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
+
+    checkEmailFormatIsCorrect(emailInputsArray);
+
     handleUnansweredQuestions(requiredFields);
     handleSubmissionMessage(requiredFields);
 });
@@ -75,7 +78,6 @@ function fieldIsCorrectlyFilled(field) {
             return true;
         }
     } else {
-        console.log('either not valid or no letters', field)
         return false;
     }
 }
@@ -86,6 +88,25 @@ function textFieldHasLetters(field) {
     }
     return true;
 }
+
+// Email validation
+
+let emailInputsArray = Array.from(document.querySelectorAll('[type="email"]'));
+console.log(emailInputsArray);
+
+function checkEmailFormatIsCorrect(emailInputsArray) {
+    for (const input of emailInputsArray) {
+        if (!input.value) {
+            console.log(input, 'email input has no value');
+        } else if (/\w+@\w+\.\w+/.test(input.value)) {
+            console.log(input, 'email is correct');
+        } else {
+            console.log(input, 'email is incorrect');
+        }
+    }
+}
+
+// checkEmailFormatIsCorrect(emailInputsArray);
 
 
 
