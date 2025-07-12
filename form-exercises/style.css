@@ -27,7 +27,7 @@ form, fieldset {
     margin: 5px;
 }
 
-.required-message {
+.message {
     align-content: right;
     color: red;
     margin: 0;
@@ -48,3 +48,4 @@ form, fieldset {
         padding: 5px;
     }
 }
+
