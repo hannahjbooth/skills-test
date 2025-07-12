@@ -1,8 +1,6 @@
 const form = document.querySelector("form");
 const requiredFields = Array.from(document.querySelectorAll('[required]'));
 
-
-
 handleFocussingOutValidation(requiredFields);
 handleSubmissionEventValidation(form);
 
@@ -30,6 +28,134 @@ function handleUnansweredQuestions(requiredFields) {
     focusFirstUnansweredQuestion(requiredFields);
 }
 
+function focusFirstUnansweredQuestion(requiredFields) {
+    for (const field of requiredFields) {
+        if (!isFieldCorrectlyFilled(field)) {
+            field.focus();
+            return;
+        }
+    }
+}
+
+// User message functions
+
+function handleSubmissionMessage(requiredFields) {
+    let allFilled = true;
+
+    for (const field of requiredFields) {
+        if (!isFieldCorrectlyFilled(field)) {
+            allFilled = false;
+            return;
+        }
+    }
+
+    if (allFilled === true) {
+        activateSubmissionMessage();
+    }
+}
+
+function handleAnswerValidityMessagesByFieldType(field) {
+    if (field.type === "text") {
+        handleTextFieldValidityMessage(field);
+    } else if (field.type === "email") {
+        handleEmailValidityMessage(field);
+    }        
+}
+
+function handleTextFieldValidityMessage(field) {
+    if (!isTextFieldCorrectlyFilled(field)) {
+        activateRequiredMessage(field);
+    } else deactivateMessage(field);
+}
+
+function handleEmailValidityMessage(field) {
+
+    const primaryEmailField = document.getElementById("email");
+    const confirmationEmailField = document.getElementById("confirm-email");
+
+    if (isEmailFieldCorrectlyFilled(field)) {
+        if (field === primaryEmailField) {
+            deactivateMessage(field);
+        } else if (field === confirmationEmailField) {
+            if (field.value === primaryEmailField.value) {
+            deactivateMessage(field);    
+            } else {
+            activateMismatchedEmailsMessage(field);
+            }
+        }
+    } else if (!field.value) {
+        activateRequiredMessage(field);
+    } else {
+        activateIncorrectEmailMessage(field);
+    }
+}
+
+function returnMessageElement(field) {
+    return document.getElementById(`${field.id}-required`);
+}
+
+function returnSubmissionMessageElement() {
+    return document.getElementById('submission-message');
+}
+
+function activateMismatchedEmailsMessage(field) {
+    returnMessageElement(field).textContent = 'Email adresses do not match';
+}
+
+function activateRequiredMessage(field) {
+    returnMessageElement(field).textContent = 'Required';
+}
+
+function activateIncorrectEmailMessage(field) {
+    returnMessageElement(field).textContent = 'Incorrect email address';
+}
+
+function activateSubmissionMessage() {
+    returnSubmissionMessageElement().textContent = 'Your form has been submitted';
+}
+
+function deactivateMessage(field) {
+    returnMessageElement(field).textContent = '';
+}
+
+// Boolean checks
+
+function isTextFieldCorrectlyFilled(field) {
+    if (!field.validity.valid) {
+        return false;
+    }
+    return true;
+}
+
+function isEmailFieldCorrectlyFilled(field) {
+    if (field.value) {
+        if (/\w+@\w+\.\w+/.test(field.value)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+function isFieldCorrectlyFilled(field) {
+    if (field.type === "text") {
+        if (isTextFieldCorrectlyFilled(field)) {
+            return true;
+        }
+    } else if (field.type = "email") {
+        if (isEmailFieldCorrectlyFilled(field)) {
+            return true;
+        }
+    } else return false;       
+}
+
+// function textFieldHasLetters(field) {
+//     if (field.type === "text" || field.type === "email" || field.tagName === "TEXTAREA" ) {
+//         return field.value.trim() !== "";
+//     }
+//     return true;
+// }
 
 /*
 
@@ -76,162 +202,6 @@ IF user clicks submit
             LET form submit
             LET form submission message appear
 */
-
-
-
-function focusFirstUnansweredQuestion(requiredFields) {
-    for (const field of requiredFields) {
-        if (!fieldIsCorrectlyFilled(field)) {
-            field.focus();
-            return;
-        }
-    }
-}
-
-function handleSubmissionMessage(requiredFields) {
-    let allFilled = true;
-
-    for (const field of requiredFields) {
-        if (!fieldIsCorrectlyFilled(field)) {
-            allFilled = false;
-            return;
-        }
-    }
-
-    if (allFilled === true) {
-        activateSubmissionMessage();
-    }
-}
-
-function returnMessageElement(field) {
-    return document.getElementById(`${field.id}-required`);
-}
-
-function activateRequiredMessage(field) {
-    returnMessageElement(field).textContent = 'Required';
-}
-
-function activateIncorrectEmailMessage(field) {
-    returnMessageElement(field).textContent = 'Incorrect email address';
-}
-
-function activateMismatchedEmailsMessage(field) {
-    returnMessageElement(field).textContent = 'Email adresses do not match';
-}
-
-function returnSubmissionMessageSpan() {
-    return document.getElementById('submission-message');
-}
-
-function activateSubmissionMessage() {
-    returnSubmissionMessageSpan().textContent = 'Your form has been submitted';
-}
-
-function deactivateMessage(field) {
-    returnMessageElement(field).textContent = '';
-}
-
-
-function handleAnswerValidityMessagesByFieldType(field) {
-    if (field.type === "text") {
-        handleTextFieldValidityMessage(field);
-    } else if (field.type === "email") {
-        handleEmailValidityMessage(field);
-    }        
-}
-
-function handleTextFieldValidityMessage(field) {
-    if (!textFieldIsCorrectlyFilled(field)) {
-        activateRequiredMessage(field);
-    } else deactivateMessage(field);
-}
-
-function textFieldIsCorrectlyFilled(field) {
-    if (!field.validity.valid) {
-        return false;
-    }
-    return true;
-}
-
-// function handleEmailValidityMessage(field) {
-//     const primaryEmailField = document.getElementById("email");
-//     const confirmationEmailField = document.getElementById("confirm-email");
-//     if (field === primaryEmailField) {
-//         if (emailFieldIsCorrectlyFilled(field)) {
-//             deactivateMessage(field);
-//         } else if (!field.value) {
-//             activateRequiredMessage(field);
-//         } else {
-//             activateIncorrectEmailMessage(field);
-//         }
-//     } else if (field === confirmationEmailField) {
-//         if (emailFieldIsCorrectlyFilled(field)) {
-//             if (field.value === primaryEmailField.value) {
-//                 deactivateMessage(field);            
-//             } else {
-//                 activateMismatchedEmailsMessage(field);
-//             }
-//         } else if (!field.value) {
-//             activateRequiredMessage(field);
-//         } else {
-//             activateIncorrectEmailMessage(field);
-//         }
-//     }
-// }
-
-function handleEmailValidityMessage(field) {
-
-    const primaryEmailField = document.getElementById("email");
-    const confirmationEmailField = document.getElementById("confirm-email");
-
-    if (emailFieldIsCorrectlyFilled(field)) {
-        if (field === primaryEmailField) {
-            deactivateMessage(field);
-        } else if (field === confirmationEmailField) {
-            if (field.value === primaryEmailField.value) {
-            deactivateMessage(field);    
-            } else {
-            activateMismatchedEmailsMessage(field);
-            }
-        }
-    } else if (!field.value) {
-        activateRequiredMessage(field);
-    } else {
-        activateIncorrectEmailMessage(field);
-    }
-}
-
-function emailFieldIsCorrectlyFilled(field) {
-    if (field.value) {
-        if (/\w+@\w+\.\w+/.test(field.value)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-}
-
-function fieldIsCorrectlyFilled(field) {
-    if (field.type === "text") {
-        if (textFieldIsCorrectlyFilled(field)) {
-            return true;
-        }
-    } else if (field.type = "email") {
-        if (emailFieldIsCorrectlyFilled(field)) {
-            return true;
-        }
-    } else return false;       
-}
-
-// function textFieldHasLetters(field) {
-//     if (field.type === "text" || field.type === "email" || field.tagName === "TEXTAREA" ) {
-//         return field.value.trim() !== "";
-//     }
-//     return true;
-// }
-
-
 
 
 
