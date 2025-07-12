@@ -55,10 +55,12 @@ function handleSubmissionMessage(requiredFields) {
 }
 
 function handleAnswerValidationMessagesByFieldType(field) {
-    if (field.type === "text") {
+    // console.log(field);
+    if (field.type === "text" && !isTextFieldForPassword(field)) {
         handleTextFieldValidationMessage(field);
-    } else if (isTextFieldForPassword(field)) {
-        handlePasswordFieldValidationMessage(field);
+    } else if (field.type === "text" && isTextFieldForPassword(field)) {
+        console.log(field);
+        // handlePasswordFieldValidationMessage(field);
     } else if (field.type === "email") {
         handleEmailValidationMessage(field);
     }
@@ -71,9 +73,22 @@ function handleTextFieldValidationMessage(field) {
 }
 
 function handlePasswordFieldValidationMessage(field) {
+    console.log(field);
     // password must include at least 8 characters, 1 number and 1 special character
     if (!isPasswordFieldCorrectlyFilled(field)) {
         // function that handles message to display according to field value
+        //if (field.value.split("")[i])
+
+
+            // FOR each input event on a password field
+                // CHECK if field.value is 8 characters long
+                // CHECK if a number exists among the characters
+                // CHECK if a special character exists among the characters
+                // IF all 3 are true,
+                    // LET validation message be deactivated
+                // ELSE IF any are untrue,
+                    // LET respective validation message be activated
+    
     }
     
 }
@@ -174,11 +189,17 @@ function isFieldCorrectlyFilled(field) {
 }
 
 function isTextFieldForPassword(field) {
+    // console.log(field);
     if (field.id.includes("password")) {
         return true;
     }
     else return false;
 }
+
+
+// requiredFields.forEach(field => {
+//     isTextFieldForPassword(field);
+//     })
 
 // function textFieldHasLetters(field) {
 //     if (field.type === "text" || field.type === "email" || field.tagName === "TEXTAREA" ) {
