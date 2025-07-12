@@ -91,7 +91,7 @@ function handleEmailValidityMessage(field) {
 }
 
 function returnMessageElement(field) {
-    return document.getElementById(`${field.id}-required`);
+    return document.getElementById(`${field.id}-message`);
 }
 
 function returnSubmissionMessageElement() {
