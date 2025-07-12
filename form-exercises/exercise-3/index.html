@@ -7,6 +7,45 @@
     <link rel="stylesheet" href="/form-exercises/style.css">
 </head>
 <body>
-    
+    <h1>Exercise 3</h1>
+    <form method="post" novalidate>
+        <fieldset>
+            <legend>Name & Email</legend>
+            <p class="required-instruction" aria-hidden="true">* Required information</p>
+            <div data-field="1">
+                <div>
+                    <label for="name">Name: <span aria-hidden="true">*</span></label>
+                    <p id="name-message" class="message"></p>
+                </div>
+                <input id="name" type="text" required>
+            </div>
+            <div data-field="2">
+                <div>
+                    <label for="surname">Surname: <span aria-hidden="true">*</span></label>
+                    <p id="surname-message" class="message"></p>                    
+                </div>
+                <input id="surname" type="text" required>            
+            </div>
+            <div data-field="3">
+                <div>
+                    <label for="email">Email: <span aria-hidden="true">*</span></label>
+                    <p id="email-message" class="message"></p>
+                </div>
+                <input id="email" type="email" required>            
+            </div>
+            <div data-field="4">
+                <div>
+                    <label for="confirm-email">Confirm Email: <span aria-hidden="true">*</span></label>
+                    <p id="confirm-email-message" class="message"></p>
+                </div>
+                <input id="confirm-email" type="email" required>            
+            </div>        
+            <input type="submit" id="submit" name="Submit">
+            <div class="submission-message">
+                <p id="submission-message"></p>
+            </div>
+        </fieldset>
+    </form>
+    <script src="/form-exercises/script.js"></script>
 </body>
 </html>
