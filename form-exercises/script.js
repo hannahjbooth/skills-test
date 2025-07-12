@@ -57,15 +57,25 @@ function handleSubmissionMessage(requiredFields) {
 function handleAnswerValidityMessagesByFieldType(field) {
     if (field.type === "text") {
         handleTextFieldValidityMessage(field);
+    } else if (isTextFieldForPassword(field)) {
+        handlePasswordFieldValidityMessage(field);
     } else if (field.type === "email") {
         handleEmailValidityMessage(field);
-    }        
+    }
 }
 
 function handleTextFieldValidityMessage(field) {
     if (!isTextFieldCorrectlyFilled(field)) {
         activateRequiredMessage(field);
     } else deactivateMessage(field);
+}
+
+function handlePasswordFieldValidityMessage(field) {
+    // password must include at least 8 characters, 1 number and 1 special character
+    if (!isPasswordFieldCorrectlyFilled(field)) {
+        // function that handles message to display according to field value
+    }
+    
 }
 
 function handleEmailValidityMessage(field) {
@@ -120,6 +130,19 @@ function deactivateMessage(field) {
 
 // Boolean checks
 
+function isPasswordFieldCorrectlyFilled(field) {
+    console.log(field.value);
+    /*
+    IF password field has a value
+        IF value doesn't include 8 characters
+            LET user message show 'requires at least 8 characters'
+        IF value doesn't include 1 number
+            LET user message show 'requires at least 1 number'
+        IF value doesn't include 1 special character
+            LET user message 'requires at least 1 special character'
+    */
+}
+
 function isTextFieldCorrectlyFilled(field) {
     if (!field.validity.valid) {
         return false;
@@ -148,6 +171,13 @@ function isFieldCorrectlyFilled(field) {
             return true;
         }
     } else return false;       
+}
+
+function isTextFieldForPassword(field) {
+    if (field.id.includes("password")) {
+        return true;
+    }
+    else return false;
 }
 
 // function textFieldHasLetters(field) {
