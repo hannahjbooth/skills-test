@@ -16,14 +16,14 @@ function handleSubmissionEventValidation(form) {
 function handleFocussingOutValidation(requiredFields) {
     for (const field of requiredFields) {
         field.addEventListener('focusout', (event) => {
-            handleAnswerValidityMessagesByFieldType(field);
+            handleAnswerValidationMessagesByFieldType(field);
         });  
     }    
 }
 
 function handleUnansweredQuestions(requiredFields) {
     requiredFields.forEach(field => {
-        handleAnswerValidityMessagesByFieldType(field);
+        handleAnswerValidationMessagesByFieldType(field);
     });
     focusFirstUnansweredQuestion(requiredFields);
 }
@@ -54,23 +54,23 @@ function handleSubmissionMessage(requiredFields) {
     }
 }
 
-function handleAnswerValidityMessagesByFieldType(field) {
+function handleAnswerValidationMessagesByFieldType(field) {
     if (field.type === "text") {
-        handleTextFieldValidityMessage(field);
+        handleTextFieldValidationMessage(field);
     } else if (isTextFieldForPassword(field)) {
-        handlePasswordFieldValidityMessage(field);
+        handlePasswordFieldValidationMessage(field);
     } else if (field.type === "email") {
-        handleEmailValidityMessage(field);
+        handleEmailValidationMessage(field);
     }
 }
 
-function handleTextFieldValidityMessage(field) {
+function handleTextFieldValidationMessage(field) {
     if (!isTextFieldCorrectlyFilled(field)) {
         activateRequiredMessage(field);
     } else deactivateMessage(field);
 }
 
-function handlePasswordFieldValidityMessage(field) {
+function handlePasswordFieldValidationMessage(field) {
     // password must include at least 8 characters, 1 number and 1 special character
     if (!isPasswordFieldCorrectlyFilled(field)) {
         // function that handles message to display according to field value
@@ -78,7 +78,7 @@ function handlePasswordFieldValidityMessage(field) {
     
 }
 
-function handleEmailValidityMessage(field) {
+function handleEmailValidationMessage(field) {
 
     const primaryEmailField = document.getElementById("email");
     const confirmationEmailField = document.getElementById("confirm-email");
