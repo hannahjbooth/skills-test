@@ -1,14 +1,16 @@
 const form = document.querySelector("form");
 const requiredFields = Array.from(document.querySelectorAll('[required]'));
+const fieldUserMessages = Array.from(document.getElementsByClassName('message'));
+console.log(fieldUserMessages);
 
 handleFocussingOutValidation(requiredFields);
-handleSubmissionEventValidation(form);
+handleSubmissionValidation(form);
 
-function handleSubmissionEventValidation(form) {
+function handleSubmissionValidation(form) {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        handleUnansweredQuestions(requiredFields);
+        handleUnansweredQuestionsOnSubmission(requiredFields);
         handleSubmissionMessage(requiredFields);
     });
 }
@@ -21,12 +23,23 @@ function handleFocussingOutValidation(requiredFields) {
     }    
 }
 
-function handleUnansweredQuestions(requiredFields) {
+function handleUnansweredQuestionsOnSubmission(requiredFields) {
     requiredFields.forEach(field => {
         handleAnswerValidationMessagesByFieldType(field);
     });
     focusFirstUnansweredQuestion(requiredFields);
 }
+
+
+
+// function handleValidationWhileTyping(requiredFields) {
+//     for (const field of requiredFields) {
+//         field.addEventListener('input', (event) => {
+//             handleAnswerValidationMessagesByFieldType(field);
+//         });  
+//     }    
+// }
+
 
 function focusFirstUnansweredQuestion(requiredFields) {
     for (const field of requiredFields) {
@@ -59,8 +72,8 @@ function handleAnswerValidationMessagesByFieldType(field) {
     if (field.type === "text" && !isTextFieldForPassword(field)) {
         handleTextFieldValidationMessage(field);
     } else if (field.type === "text" && isTextFieldForPassword(field)) {
-        console.log(field);
-        // handlePasswordFieldValidationMessage(field);
+        console.log('password field recognised');
+        handlePasswordFieldValidationMessage(field);
     } else if (field.type === "email") {
         handleEmailValidationMessage(field);
     }
@@ -76,21 +89,19 @@ function handlePasswordFieldValidationMessage(field) {
     console.log(field);
     // password must include at least 8 characters, 1 number and 1 special character
     if (!isPasswordFieldCorrectlyFilled(field)) {
-        // function that handles message to display according to field value
-        //if (field.value.split("")[i])
+        const fieldValueArray = field.value.split("");
+        if (fieldValueArray.length < 8) {
+            console.log('needs min 8 characters');
+        } 
 
+        if (!doesArrayContainOneDigit(fieldValueArray)) {
+            console.log('needs 1 digit');
+        }
 
-            // FOR each input event on a password field
-                // CHECK if field.value is 8 characters long
-                // CHECK if a number exists among the characters
-                // CHECK if a special character exists among the characters
-                // IF all 3 are true,
-                    // LET validation message be deactivated
-                // ELSE IF any are untrue,
-                    // LET respective validation message be activated
-    
+        if (!doesArrayContainOneSpecialChar(fieldValueArray)) {
+            console.log(('needs 1 special character'));
+        }
     }
-    
 }
 
 function handleEmailValidationMessage(field) {
@@ -98,20 +109,21 @@ function handleEmailValidationMessage(field) {
     const primaryEmailField = document.getElementById("email");
     const confirmationEmailField = document.getElementById("confirm-email");
 
-    if (isEmailFieldCorrectlyFilled(field)) {
-        if (field === primaryEmailField) {
-            deactivateMessage(field);
-        } else if (field === confirmationEmailField) {
-            if (field.value === primaryEmailField.value) {
-            deactivateMessage(field);    
-            } else {
-            activateMismatchedEmailsMessage(field);
-            }
-        }
-    } else if (!field.value) {
+    if (!field.value) {
         activateRequiredMessage(field);
-    } else {
-        activateIncorrectEmailMessage(field);
+
+    } else if (field === primaryEmailField) {
+        if (isEmailFieldCorrectlyFilled(field)) {
+            deactivateMessage(field);
+        } else {
+            activateIncorrectEmailMessage(field);
+        }
+    } else if (field === confirmationEmailField) {
+        if (field.value === primaryEmailField.value) {
+            deactivateMessage(field);    
+        } else {
+            activateMismatchedEmailsMessage(field);
+        }
     }
 }
 
@@ -145,8 +157,47 @@ function deactivateMessage(field) {
 
 // Boolean checks
 
+function doesArrayContainOneDigit(array) {
+    const doesArrayContainOneDigit = array.some(char => /\d/.test(char));
+    return doesArrayContainOneDigit;
+}
+
+function doesArrayContainOneSpecialChar(array) {
+    const doesArrayContainOneSpecialChar = array.some(char => /[\W_]/.test(char));
+    return doesArrayContainOneSpecialChar;
+}
+
 function isPasswordFieldCorrectlyFilled(field) {
-    console.log(field.value);
+
+    field.addEventListener('input', event => {
+        const fieldValueArray = field.value.split("");
+
+        const isCorrectlyFilled = (
+            fieldValueArray.length >=8 &&
+            doesArrayContainOneDigit(fieldValueArray) &&
+            doesArrayContainOneSpecialChar(fieldValueArray)
+        );
+
+        // if (fieldValueArray.length < 8) {
+        //     correctlyFilled = false;
+        // } 
+
+        // if (!doesArrayContainOneDigit(fieldValueArray)) {
+        //     correctlyFilled = false;
+        // }
+
+        // if (!doesArrayContainOneSpecialChar(fieldValueArray)) {
+        //     correctlyFilled = false;
+        // }
+
+        // else {
+        //     correctlyFilled = true;
+        // }
+
+        console.log('correctly filled?', isCorrectlyFilled);   
+        return isCorrectlyFilled;
+    });
+}
     /*
     IF password field has a value
         IF value doesn't include 8 characters
@@ -155,8 +206,26 @@ function isPasswordFieldCorrectlyFilled(field) {
             LET user message show 'requires at least 1 number'
         IF value doesn't include 1 special character
             LET user message 'requires at least 1 special character'
+
+                   // function that handles message to display according to field value
+        //if (field.value.split("")[i])
+
+
+            // FOR each input event on a password field
+                // CHECK if field.value is 8 characters long
+                // CHECK if a number exists among the characters
+                // CHECK if a special character exists among the characters
+                // IF all 3 are true,
+                    // LET validation message be deactivated
+                // ELSE IF any are untrue,
+                    // LET respective validation message be activated
     */
-}
+
+
+const testPasswordField = document.getElementById("password");
+console.log(testPasswordField);
+
+isPasswordFieldCorrectlyFilled(testPasswordField);
 
 function isTextFieldCorrectlyFilled(field) {
     if (!field.validity.valid) {
