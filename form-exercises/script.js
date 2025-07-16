@@ -290,6 +290,8 @@ function isFieldOneOfPair(field) {
     }
 }
 
-
+function returnFieldPair(field) {
+    return Array.from(document.getElementsByClassName(`${field.id}-pair`));
+}
 
 
