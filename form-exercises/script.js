@@ -88,7 +88,7 @@ function handleTextFieldValidationMessage(field) {
 function handlePasswordFieldValidationMessage(field) {
     if (!isPasswordFieldCorrectlyFilled(field)) {
         const fieldValueArray = field.value.split("");
-        
+
         if (fieldValueArray.length < 8) {
             activateMessageByRequirement(field, 'length');
         } else deactivateMessageByRequirement(field, 'length');
@@ -201,23 +201,6 @@ function isPasswordFieldCorrectlyFilled(field) {
             doesArrayContainOneSpecialChar(fieldValueArray)
         );
 
-        // if (fieldValueArray.length < 8) {
-        //     correctlyFilled = false;
-        // } 
-
-        // if (!doesArrayContainOneDigit(fieldValueArray)) {
-        //     correctlyFilled = false;
-        // }
-
-        // if (!doesArrayContainOneSpecialChar(fieldValueArray)) {
-        //     correctlyFilled = false;
-        // }
-
-        // else {
-        //     correctlyFilled = true;
-        // }
-
-        console.log('correctly filled?', isCorrectlyFilled);   
         return isCorrectlyFilled;
     });
 }
@@ -300,51 +283,8 @@ function isTextFieldForPassword(field) {
 //     return true;
 // }
 
-/*
 
-PSEUDOCODE
-FOR each required input field
-    IF user focusses out of a field
-        LET field value validity be checked by field type
-            IF field type is "text"
-                LET text field validity message be handled
-                    IF text input has no value
-                        LET 'required' message be displayed
-                    IF text input has a value
-                        IF any message is displayed
-                            LET message be deactivated
-            IF field type is "email"
-                LET email field validity message be handled
-                    FOR primary email field
-                        IF email value has no value
-                            LET 'required' message be displayed
-                        IF email value does not match regexp pattern
-                            LET 'incorrect email' message be displayed
-                        IF email value matches regexp pattern
-                            IF any message is displayed
-                                LET message be deactivated
-                    FOR confirmation email field
-                        IF confirmation email value has no value
-                            LET 'required' message be displayed
-                        IF confirmation email value does not match primary email value
-                            LET 'mismatch' message be displayed
 
-LET email field
-LET associated email confirmation field                         
-    IF user fills both associated email fields
-        IF both values are correctly formatted
-        IF both values aren't identical
-            LET required-message element take message '
-
-IF user clicks submit
-    LET default event be prevented
-        IF any required question is unanswered OR incorrectly answered
-            LET user be notified of any required unanswered question
-            LET first answered question be focussed
-        IF all questions are answered
-            LET form submit
-            LET form submission message appear
-*/
 
 
 
