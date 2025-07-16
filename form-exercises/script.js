@@ -284,7 +284,11 @@ function isTextFieldForPassword(field) {
 // }
 
 
-
+function isFieldOneOfPair(field) {
+    if (field.classList.contains('pair')) {
+        return true;
+    }
+}
 
 
 
