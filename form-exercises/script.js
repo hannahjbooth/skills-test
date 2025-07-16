@@ -72,7 +72,7 @@ function handleAnswerValidationMessagesByFieldType(field) {
     if (field.type === "text" && !isTextFieldForPassword(field)) {
         handleTextFieldValidationMessage(field);
     } else if (field.type === "text" && isTextFieldForPassword(field)) {
-        console.log('password field recognised');
+        //console.log('password field recognised');
         handlePasswordFieldValidationMessage(field);
     } else if (field.type === "email") {
         handleEmailValidationMessage(field);
@@ -86,21 +86,20 @@ function handleTextFieldValidationMessage(field) {
 }
 
 function handlePasswordFieldValidationMessage(field) {
-    console.log(field);
-    // password must include at least 8 characters, 1 number and 1 special character
     if (!isPasswordFieldCorrectlyFilled(field)) {
         const fieldValueArray = field.value.split("");
+        
         if (fieldValueArray.length < 8) {
-            console.log('needs min 8 characters');
-        } 
+            activateMessageByRequirement(field, 'length');
+        } else deactivateMessageByRequirement(field, 'length');
 
         if (!doesArrayContainOneDigit(fieldValueArray)) {
-            console.log('needs 1 digit');
-        }
+            activateMessageByRequirement(field, 'digit');
+        } else deactivateMessageByRequirement(field, 'digit');
 
         if (!doesArrayContainOneSpecialChar(fieldValueArray)) {
-            console.log(('needs 1 special character'));
-        }
+            activateMessageByRequirement(field, 'special-char');
+        } else deactivateMessageByRequirement(field, 'special-char');
     }
 }
 
@@ -131,12 +130,36 @@ function returnMessageElement(field) {
     return document.getElementById(`${field.id}-message`);
 }
 
+function returnMessageElementByRequirement(field, requirementString) {
+    return document.getElementById(`${field.id}-${requirementString}`);
+}
+
 function returnSubmissionMessageElement() {
     return document.getElementById('submission-message');
 }
 
 function activateMismatchedEmailsMessage(field) {
     returnMessageElement(field).textContent = 'Email adresses do not match';
+}
+
+function activateMessageByRequirement(field, requirementString) {
+    const messageElement = returnMessageElementByRequirement(field, requirementString);
+    console.log(messageElement);
+    if (requirementString === 'length') {
+        messageElement.textContent = 'Requires at least 8 characters';
+        console.log(messageElement);
+    } else if (requirementString === 'digit') {
+        messageElement.textContent = 'Requires at least 1 digit';
+        console.log(messageElement);
+    } else if (requirementString === 'special-char') {
+        messageElement.textContent = 'Requires at least 1 special character';
+        console.log(messageElement);
+    }
+}
+
+function deactivateMessageByRequirement(field, requirementString) {
+    const messageElement = returnMessageElementByRequirement(field, requirementString);
+    return messageElement.textContent = '';
 }
 
 function activateRequiredMessage(field) {
