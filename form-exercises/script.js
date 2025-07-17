@@ -9,8 +9,7 @@ handleSubmissionValidation(form);
 function handleSubmissionValidation(form) {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
-
-        handleUnansweredQuestionsOnSubmission(requiredFields);
+        handleUnansweredQuestionsMessages(requiredFields);
         handleSubmissionMessage(requiredFields);
     });
 }
@@ -18,14 +17,14 @@ function handleSubmissionValidation(form) {
 function handleFocussingOutValidation(requiredFields) {
     for (const field of requiredFields) {
         field.addEventListener('focusout', (event) => {
-            handleAnswerValidationMessagesByFieldType(field);
+            handleValidationMessagesByFieldType(field);
         });  
     }    
 }
 
-function handleUnansweredQuestionsOnSubmission(requiredFields) {
+function handleUnansweredQuestionsMessages(requiredFields) {
     requiredFields.forEach(field => {
-        handleAnswerValidationMessagesByFieldType(field);
+        handleValidationMessagesByFieldType(field);
     });
     focusFirstUnansweredQuestion(requiredFields);
 }
@@ -35,7 +34,7 @@ function handleUnansweredQuestionsOnSubmission(requiredFields) {
 // function handleValidationWhileTyping(requiredFields) {
 //     for (const field of requiredFields) {
 //         field.addEventListener('input', (event) => {
-//             handleAnswerValidationMessagesByFieldType(field);
+//             handleValidationMessagesByFieldType(field);
 //         });  
 //     }    
 // }
@@ -67,17 +66,17 @@ function handleSubmissionMessage(requiredFields) {
     }
 }
 
-function handleAnswerValidationMessagesByFieldType(field) {
-    if (field.type === "text" && !isTextFieldForPassword(field)) {
-        handleTextFieldValidationMessage(field);
-    } else if (field.type === "text" && isTextFieldForPassword(field)) {
-        handlePasswordValidationMessage(field);
+function handleValidationMessagesByFieldType(field) {
+    if (field.type === "text" && isTextFieldForPassword(field)) {
+        handlePasswordValidation(field);
     } else if (field.type === "email") {
-        handleEmailValidationMessage(field);
+        handleEmailValidation(field);
+    } else if (field.type === "text") {
+        handleTextFieldValidation(field);
     }
 }
 
-function handleTextFieldValidationMessage(field) {
+function handleTextFieldValidation(field) {
     if (!isTextFieldCorrectlyFilled(field)) {
         activateRequiredMessage(field);
     } else deactivateMessage(field);
@@ -101,13 +100,13 @@ function handlePasswordFieldValidationMessage(field) {
     }
 }
 
-function handleEmailValidationMessage(field) {
+function handleEmailValidation(field) {
     if (!field.value) {
         activateRequiredMessage(field);
     }  else handleEmailMatchingPairValidation(field);
 }
 
-function handlePasswordValidationMessage(field) {
+function handlePasswordValidation(field) {
     if (!field.value) {
         activateRequiredMessage(field);
     } else handlePasswordMatchingPairValidation(field);
@@ -268,19 +267,6 @@ function isTextFieldForPassword(field) {
     }
     else return false;
 }
-
-
-// requiredFields.forEach(field => {
-//     isTextFieldForPassword(field);
-//     })
-
-// function textFieldHasLetters(field) {
-//     if (field.type === "text" || field.type === "email" || field.tagName === "TEXTAREA" ) {
-//         return field.value.trim() !== "";
-//     }
-//     return true;
-// }
-
 
 function isFieldOneOfPair(field) {
     if (field.classList.contains('pair')) {
