@@ -104,21 +104,40 @@ function handlePasswordFieldValidationMessage(field) {
 }
 
 function handleEmailValidationMessage(field) {
-
-    const primaryEmailField = document.getElementById("email");
-    const confirmationEmailField = document.getElementById("confirm-email");
+    let fieldPairArray = returnFieldPairArray(field);
 
     if (!field.value) {
         activateRequiredMessage(field);
 
-    } else if (field === primaryEmailField) {
+    } else if (field === fieldPairArray[0]) {
         if (isEmailFieldCorrectlyFilled(field)) {
             deactivateMessage(field);
         } else {
             activateIncorrectEmailMessage(field);
         }
-    } else if (field === confirmationEmailField) {
-        if (field.value === primaryEmailField.value) {
+    } else if (field === fieldPairArray[1]) {
+        if (field.value === fieldPairArray[0].value) {
+            deactivateMessage(field);    
+        } else {
+            activateMismatchedEmailsMessage(field);
+        }
+    }
+}
+
+function handleMatchingPairValidation(field) {
+    let fieldPairArray = returnFieldPairArray(field);
+
+    if (!field.value) {
+        activateRequiredMessage(field);
+
+    } else if (field === fieldPairArray[0]) {
+        if (isEmailFieldCorrectlyFilled(field)) {
+            deactivateMessage(field);
+        } else {
+            activateIncorrectEmailMessage(field);
+        }
+    } else if (field === fieldPairArray[1]) {
+        if (field.value === fieldPairArray[0].value) {
             deactivateMessage(field);    
         } else {
             activateMismatchedEmailsMessage(field);
@@ -204,34 +223,6 @@ function isPasswordFieldCorrectlyFilled(field) {
         return isCorrectlyFilled;
     });
 }
-    /*
-    IF password field has a value
-        IF value doesn't include 8 characters
-            LET user message show 'requires at least 8 characters'
-        IF value doesn't include 1 number
-            LET user message show 'requires at least 1 number'
-        IF value doesn't include 1 special character
-            LET user message 'requires at least 1 special character'
-
-                   // function that handles message to display according to field value
-        //if (field.value.split("")[i])
-
-
-            // FOR each input event on a password field
-                // CHECK if field.value is 8 characters long
-                // CHECK if a number exists among the characters
-                // CHECK if a special character exists among the characters
-                // IF all 3 are true,
-                    // LET validation message be deactivated
-                // ELSE IF any are untrue,
-                    // LET respective validation message be activated
-    */
-
-
-const testPasswordField = document.getElementById("password");
-console.log(testPasswordField);
-
-isPasswordFieldCorrectlyFilled(testPasswordField);
 
 function isTextFieldCorrectlyFilled(field) {
     if (!field.validity.valid) {
@@ -264,7 +255,6 @@ function isFieldCorrectlyFilled(field) {
 }
 
 function isTextFieldForPassword(field) {
-    // console.log(field);
     if (field.id.includes("password")) {
         return true;
     }
@@ -290,8 +280,12 @@ function isFieldOneOfPair(field) {
     }
 }
 
-function returnFieldPair(field) {
-    return Array.from(document.getElementsByClassName(`${field.id}-pair`));
+function returnFieldPairArray(field) {
+    if (field.id.includes("confirm-")) {
+        let valueType = field.id.replace("confirm-", "");
+        return fieldPairArray = Array.from(document.getElementsByClassName(`${valueType}-pair`));
+    } else {
+        let valueType = field.id;
+        return fieldPairArray = Array.from(document.getElementsByClassName(`${valueType}-pair`));
+    }
 }
-
-
