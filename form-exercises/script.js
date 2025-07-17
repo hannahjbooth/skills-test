@@ -104,33 +104,15 @@ function handlePasswordFieldValidationMessage(field) {
 }
 
 function handleEmailValidationMessage(field) {
-    let fieldPairArray = returnFieldPairArray(field);
-
     if (!field.value) {
         activateRequiredMessage(field);
-
-    } else if (field === fieldPairArray[0]) {
-        if (isEmailFieldCorrectlyFilled(field)) {
-            deactivateMessage(field);
-        } else {
-            activateIncorrectEmailMessage(field);
-        }
-    } else if (field === fieldPairArray[1]) {
-        if (field.value === fieldPairArray[0].value) {
-            deactivateMessage(field);    
-        } else {
-            activateMismatchedEmailsMessage(field);
-        }
-    }
+    }  else handleEmailMatchingPairValidation(field);
 }
 
-function handleMatchingPairValidation(field) {
+function handleEmailMatchingPairValidation(field) {
     let fieldPairArray = returnFieldPairArray(field);
 
-    if (!field.value) {
-        activateRequiredMessage(field);
-
-    } else if (field === fieldPairArray[0]) {
+    if (field === fieldPairArray[0]) {
         if (isEmailFieldCorrectlyFilled(field)) {
             deactivateMessage(field);
         } else {
