@@ -90,16 +90,16 @@ function handlePasswordFieldValidationMessage(field) {
         const fieldValueArray = field.value.split("");
 
         if (fieldValueArray.length < 8) {
-            activateMessageByRequirement(field, 'length');
-        } else deactivateMessageByRequirement(field, 'length');
+            activatePasswordMessageByRequirement(field, 'length');
+        } else deactivatePasswordMessageByRequirement(field, 'length');
 
         if (!doesArrayContainOneDigit(fieldValueArray)) {
-            activateMessageByRequirement(field, 'digit');
-        } else deactivateMessageByRequirement(field, 'digit');
+            activatePasswordMessageByRequirement(field, 'digit');
+        } else deactivatePasswordMessageByRequirement(field, 'digit');
 
         if (!doesArrayContainOneSpecialChar(fieldValueArray)) {
-            activateMessageByRequirement(field, 'special-char');
-        } else deactivateMessageByRequirement(field, 'special-char');
+            activatePasswordMessageByRequirement(field, 'special-char');
+        } else deactivatePasswordMessageByRequirement(field, 'special-char');
     }
 }
 
@@ -143,7 +143,7 @@ function activateMismatchedEmailsMessage(field) {
     returnMessageElement(field).textContent = 'Email adresses do not match';
 }
 
-function activateMessageByRequirement(field, requirementString) {
+function activatePasswordMessageByRequirement(field, requirementString) {
     const messageElement = returnMessageElementByRequirement(field, requirementString);
     console.log(messageElement);
     if (requirementString === 'length') {
@@ -158,7 +158,7 @@ function activateMessageByRequirement(field, requirementString) {
     }
 }
 
-function deactivateMessageByRequirement(field, requirementString) {
+function deactivatePasswordMessageByRequirement(field, requirementString) {
     const messageElement = returnMessageElementByRequirement(field, requirementString);
     return messageElement.textContent = '';
 }
