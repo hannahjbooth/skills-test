@@ -68,12 +68,10 @@ function handleSubmissionMessage(requiredFields) {
 }
 
 function handleAnswerValidationMessagesByFieldType(field) {
-    // console.log(field);
     if (field.type === "text" && !isTextFieldForPassword(field)) {
         handleTextFieldValidationMessage(field);
     } else if (field.type === "text" && isTextFieldForPassword(field)) {
-        //console.log('password field recognised');
-        handlePasswordFieldValidationMessage(field);
+        handlePasswordValidationMessage(field);
     } else if (field.type === "email") {
         handleEmailValidationMessage(field);
     }
@@ -109,6 +107,30 @@ function handleEmailValidationMessage(field) {
     }  else handleEmailMatchingPairValidation(field);
 }
 
+function handlePasswordValidationMessage(field) {
+    if (!field.value) {
+        activateRequiredMessage(field);
+    } else handlePasswordMatchingPairValidation(field);
+}
+
+function handlePasswordMatchingPairValidation(field) {
+    let fieldPairArray = returnFieldPairArray(field);
+
+    if (field === fieldPairArray[0]) {
+        if (isPasswordFieldCorrectlyFilled(field)) {
+            deactivateMessage(field);
+        } else {
+            handlePasswordFieldValidationMessage(field);
+        }
+    } else if (field === fieldPairArray[1]) {
+        if (field.value === fieldPairArray[0].value) {
+            deactivateMessage(field);    
+        } else {
+            activateMismatchedPasswordsMessage(field);
+        }
+    }
+}
+
 function handleEmailMatchingPairValidation(field) {
     let fieldPairArray = returnFieldPairArray(field);
 
@@ -141,6 +163,10 @@ function returnSubmissionMessageElement() {
 
 function activateMismatchedEmailsMessage(field) {
     returnMessageElement(field).textContent = 'Email adresses do not match';
+}
+
+function activateMismatchedPasswordsMessage(field) {
+    returnMessageElement(field).textContent = 'Passwords do not match';
 }
 
 function activatePasswordMessageByRequirement(field, requirementString) {
